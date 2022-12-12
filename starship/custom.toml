@@ -1,0 +1,130 @@
+command_timeout = 1000
+add_newline = true
+
+format = """
+[╭─](#5B5E61)\
+    [ ](#cebdac)\
+      $directory\
+      $git_branch\
+      $git_status\
+      $fill\
+      $nodejs\
+      $dotnet\
+      $python\
+      $docker_context [ ](#cebdac)	
+[╰─](#5B5E61)\
+    $shell"""
+
+# color1="#656555"
+# color2="#5B5E61"
+# color3="#5E6265"
+# color4="#67696B"
+# color5="#BA593C"
+# color7="#cebdac"
+
+[fill]
+symbol=" "
+
+[memory_usage]
+disabled = false
+symbol = " "
+threshold = -1
+format = " [$symbol$ram](#656555)"
+
+
+[username]
+show_always = true
+format = "[$user](#656555)"
+
+[hostname]
+ssh_only= false
+format = "[$hostname](#656555)"
+disabled = false
+
+[docker_context]
+symbol = "echo '  '"
+format = "via [🐋 $context](blue bold)"
+
+[character]
+success_symbol = " [$shell\\$](#cebdac)"
+error_symbol = " [$shell](#cebdac)"
+
+[shell]
+powershell_indicator = "_"
+bash_indicator = ""
+disabled= false
+
+
+[time]
+disabled = false
+time_format = "%T"
+format = "[  $time](#BA593C)"
+use_12hr = true
+
+[directory]
+disabled = false
+read_only = " "
+truncation_length = 1
+truncation_symbol = " "
+truncate_to_repo = false
+format = "[$read_only](#67696B)[$path](#67696B) "
+home_symbol = ""
+
+# [directory.substitution]
+# "~" = ""
+
+[cmd_duration]
+disabled = false
+min_time = 2_000
+show_milliseconds = true
+show_notifications = false
+min_time_to_notify = 45_000
+format = "[ 祥 $duration](#5E6265) "
+
+[git_status]
+stashed = " \\(${count}\\) "
+ahead = "⇡${count} "
+behind = "⇣${count} "
+diverged = "李${ahead_count} ${behind_count} "
+conflicted = "🏳${count} "
+deleted = "[🗑${count}](#5E6265) "
+renamed = "»${count} "
+modified = "[📝\\(${count}\\) ](#5E6265) "
+staged = "[\uf046 ${count}](#5E6265) "
+untracked = " \\(${count}\\) "
+up_to_date = "✓"
+format = "([$all_status$ahead_behind](#5E6265)) "
+
+[git_branch]
+# symbol = " "
+symbol = ""
+truncation_length = 20
+always_show_remote = false
+format = "[$symbol$branch(:$remote_branch)](#cebdac) "
+
+[package]
+symbol =" "
+display_private = true
+version_format = "v${raw}"
+format = "[$symbol$version](#67696B)"
+
+#=== languages ===
+
+[nodejs]
+symbol = "  "
+format = "[$symbol($version)](#cebdac)"
+
+[python]
+symbol = "  "
+pyenv_prefix = 'pyenv '
+python_binary = "python"
+format = '[$symbol$pyenv_prefix$version(\($virtualenv\))](#cebdac)'
+
+[dotnet]
+symbol = ".NET "
+style = "green"
+heuristic = true
+# detect_extensions = "['csproj', 'fsproj', 'xproj']"
+# detect_files = "['global.json', 'project.json', 'Directory.Build.props', 'Directory.Build.targets', 'Packages.props']"
+version_format = "v${raw}"
+format = "via [$symbol($version)]($style)"
