@@ -11,9 +11,19 @@ Set-Alias -Name Screenshot-Starship -Value screenshot_to_pywal_to_starship
 Set-Alias -Name vim nvim
 
 # Utilities
+
+## Find program location
 function which ($command) {
   Get-Command -Name $command -ErrorAction SilentlyContinue |
         Select-Object -ExpandProperty Path -ErrorAction SilentlyContinue
+}
+
+## Find any file in the system
+function find-file($name) {
+    Get-ChildItem -recurse -filter "*${name}*" -ErrorAction SilentlyContinue | ForEach-Object {
+        $place_path = $_.directory
+        Write-Output "${place_path}\${_}"
+    }
 }
 
 # Git commands
