@@ -29,7 +29,8 @@ Set-PsfzfOption -PSReadLineChordProvider 'Ctrl+f' -PSReadLineChordReverseHistory
 
 # Env
 $env:GIT_SSH = "C:\Windows\system32\OpenSSH\ssh.exe"
-$env:STARSHIP_CONFIG = "$HOME\.config\starship\starship.toml"
+$env:STARSHIP_CONFIG = "$HOME\.config\starship\ChristianLempa.toml"
+$ENV:STARSHIP_DISTRO = "者 omoi"
 
 # UPDATE SCRIPTS
 
