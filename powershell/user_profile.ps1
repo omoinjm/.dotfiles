@@ -4,17 +4,17 @@
 # IMPORTS
 
 ## Prompt
-Import-Module posh-git
-oh-my-posh init pwsh | Invoke-Expression
-## Set-PoshPrompt Paradox
+# Import-Module posh-git
+# oh-my-posh init pwsh | Invoke-Expression
+# Set-PoshPrompt Paradox
 
 ## Icons
 Import-Module Terminal-Icons
 
-# Load prompt config
-function Get-ScriptDirectory { Split-Path $MyInvocation.ScriptName }
-$PROMPT_CONFIG = Join-Path (Get-ScriptDirectory) 'themes/json.omp.json'
-oh-my-posh --init --shell pwsh --config $PROMPT_CONFIG | Invoke-Expression
+## Load prompt config
+# function Get-ScriptDirectory { Split-Path $MyInvocation.ScriptName }
+# $PROMPT_CONFIG = Join-Path (Get-ScriptDirectory) 'themes/json.omp.json'
+# oh-my-posh --init --shell pwsh --config $PROMPT_CONFIG | Invoke-Expression
 
 # PSReadLine
 Set-PSReadLineOption -EditMode Emacs

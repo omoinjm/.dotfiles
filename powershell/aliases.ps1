@@ -60,9 +60,5 @@ function gdelete($branch) {
 	git branch -D $branch
 }
 
-# Open VSC and Serve
-function cng { code . && ng serve -o }
-
-
 ### STARSHIP THEME
-function star { Invoke-Expression (&starship init powershell) }
+Invoke-Expression (&starship init powershell)

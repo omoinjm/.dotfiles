@@ -1,10 +1,10 @@
 # Work repos
 
 ### CHRONODESK
-function chrono { cd "D:\Rysis\Git\rysis-chronolog\" }
-function chronoApi { cd "D:\Rysis\Git\rysis-chronolog\Timesheet_API\" }
-function chronoWeb { cd "D:\Rysis\Git\rysis-chronolog\Timesheet_Web\ClientApp\" }
-function chronoSql { cd "D:\Rysis\Git\rysis-chronolog\Timesheet_Midtier\SqlProxyClassGen\" }
+function chrono { cd "C:\Rysis\Git\rysis-chronolog\" }
+function chronoApi { cd "C:\Rysis\Git\rysis-chronolog\Timesheet_API\" }
+function chronoWeb { cd "C:\Rysis\Git\rysis-chronolog\Timesheet_Web\ClientApp\" }
+function chronoSql { cd "C:\Rysis\Git\rysis-chronolog\Timesheet_Midtier\SqlProxyClassGen\" }
 
 ### VISIBILL
 function visibill { cd "D:\Rysis\Git\visibill-4\" }
