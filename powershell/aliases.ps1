@@ -61,4 +61,4 @@ function gdelete($branch) {
 }
 
 ### STARSHIP THEME
-Invoke-Expression (&starship init powershell)
+function star { Invoke-Expression (&starship init powershell) }

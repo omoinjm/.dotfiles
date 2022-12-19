@@ -1,3 +1,12 @@
-# dotfiles-windows
+# Personal dotfiles
 
-These are my user-specific configuration files that I use to personalize my Windows experience.
+![pwsh screenshot](./images/pwsh.png)
+
+![nvim screenshot](./images/vim.png)
+
+## Contents
+
+- vim (NeoVim) config
+- tmux config
+- git config
+- PowerShell config
