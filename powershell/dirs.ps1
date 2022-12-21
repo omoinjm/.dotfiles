@@ -22,6 +22,12 @@ function veloSql { cd "D:\Rysis\Git\rysis-driverisk2\DriveRisk.Midtier\SqlProxyC
 function drive { cd "D:\Rysis\Git\rysis-driverisk\" }
 function drops { cd "D:\Rysis\Git\rysis-driverisk\DriveRisk.Drops.WebApp\" }
 
+### DRIVERISK ADMIN
+function driveAdmin { cd "D:\Rysis\Git\driverisk-admin" }
+function driveApi { cd "D:\Rysis\Git\driverisk-admin\DriveRisk.Admin.Api" }
+function driveWeb { cd "D:\Rysis\Git\driverisk-admin\DriveRisk.Admin.Webapp" }
+function driveSql { cd "D:\Rysis\Git\driverisk-admin\DriveRisk.Admin.Midtier\ProxyGeneration" }
+
 ### SAHCS
 function sahiv { cd "D:\Rysis\GIT\rysis-sahiv\Website\" }
 function sahivApi { cd "D:\Rysis\Git\rysis-sahiv\Website\SahivV3_Api" }
