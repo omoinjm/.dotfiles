@@ -28,6 +28,9 @@ function driveApi { cd "D:\Rysis\Git\driverisk-admin\DriveRisk.Admin.Api" }
 function driveWeb { cd "D:\Rysis\Git\driverisk-admin\DriveRisk.Admin.Webapp" }
 function driveSql { cd "D:\Rysis\Git\driverisk-admin\DriveRisk.Admin.Midtier\ProxyGeneration" }
 
+### DRIVERISK SERVICES
+function driveService { cd "D:\Rysis\Git\driverisk-services\DriveRisk.DriverDispatch" }
+
 ### SAHCS
 function sahiv { cd "D:\Rysis\GIT\rysis-sahiv\Website\" }
 function sahivApi { cd "D:\Rysis\Git\rysis-sahiv\Website\SahivV3_Api" }
@@ -51,6 +54,6 @@ function press { cd "D:\Rysis\Git\rysis-pressombudsman\" }
 function pressSql { cd "D:\Rysis\Git\rysis-pressombudsman\PressOmbudsman.Midtier\Bat2\" }
 
 ### PERSONAL DIR
-function omoiDev { cd "C:\Users\nhlan\Desktop\Development" }
-function omoiGit { cd "C:\Users\nhlan\Desktop\Development\Git" }
-function omoiSite { cd "C:\Users\nhlan\Desktop\Development\Git\portfolio" }
+function omoiDev { cd "D:\nhlan\Desktop\Development" }
+function omoiGit { cd "D:\nhlan\Desktop\Development\Git" }
+function omoiSite { cd "D:\nhlan\Desktop\Development\Git\portfolio" }
