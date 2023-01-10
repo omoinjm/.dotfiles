@@ -37,12 +37,7 @@ setx AZURE_TENANT_ID="6036bd51-a797-4615-9c21-4c0933294a33"
 setx AZURE_CLIENT_SECRET="Rmm8Q~0H2ZHS4i2k6cklEYHfgzfyG24qYGtmkcfC"
 setx SqlConnectionString="Server=tcp:129.232.234.172,50020;Initial Catalog=AzureAD;Persist Security Info=False;User ID=sa;Password=F27035vRXxoSMeGU9kZs;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;"
 
-$env:AZURE_CLIENT_ID = "986bb8d1-398c-4ba2-a742-337b695b22cb"
-$env:AZURE_TENANT_ID = "6036bd51-a797-4615-9c21-4c0933294a33"
-$env:AZURE_CLIENT_SECRET = "Rmm8Q~0H2ZHS4i2k6cklEYHfgzfyG24qYGtmkcfC"
-
 # UPDATE SCRIPTS
-
 function pywal_to_starship {
 	Update-WalTerminal *>&1;
 	bash ~/dev/winwaltostarship.sh;
