@@ -4,17 +4,17 @@
 # IMPORTS
 
 ## Prompt
-# Import-Module posh-git
-# oh-my-posh init pwsh | Invoke-Expression
+Import-Module posh-git
+oh-my-posh init pwsh | Invoke-Expression
 # Set-PoshPrompt Paradox
 
 ## Icons
 Import-Module Terminal-Icons
 
 ## Load prompt config
-# function Get-ScriptDirectory { Split-Path $MyInvocation.ScriptName }
-# $PROMPT_CONFIG = Join-Path (Get-ScriptDirectory) 'themes/json.omp.json'
-# oh-my-posh --init --shell pwsh --config $PROMPT_CONFIG | Invoke-Expression
+function Get-ScriptDirectory { Split-Path $MyInvocation.ScriptName }
+$PROMPT_CONFIG = Join-Path (Get-ScriptDirectory) 'themes/json.omp.json'
+oh-my-posh --init --shell pwsh --config $PROMPT_CONFIG | Invoke-Expression
 
 # PSReadLine
 Set-PSReadLineOption -EditMode Emacs
@@ -30,6 +30,10 @@ Set-PsfzfOption -PSReadLineChordProvider 'Ctrl+f' -PSReadLineChordReverseHistory
 # Env
 $env:GIT_SSH = "C:\Windows\system32\OpenSSH\ssh.exe"
 $env:STARSHIP_CONFIG = "$HOME\.config\starship\custom.toml"
+
+$env:AZURE_CLIENT_ID = "986bb8d1-398c-4ba2-a742-337b695b22cb"
+$env:AZURE_TENANT_ID = "6036bd51-a797-4615-9c21-4c0933294a33"
+$env:AZURE_CLIENT_SECRET = "Rmm8Q~0H2ZHS4i2k6cklEYHfgzfyG24qYGtmkcfC"
 
 # UPDATE SCRIPTS
 
