@@ -1,5 +1,4 @@
 # Alias
-. $HOME\.config\powershell\dirs.ps1
 Set-Alias vim nvim
 Set-Alias ll ls
 Set-Alias g git
@@ -11,6 +10,9 @@ Set-Alias -Name Wallpaper-Starship -Value update_pywal_to_starship
 Set-Alias -Name Screenshot-Starship -Value screenshot_to_pywal_to_starship
 Set-Alias -Name vim nvim
 Set-Alias -Name curl -Value "C:\Program Files\Git\mingw64\bin\curl.exe" -Option AllScope
+
+## Directoies
+. $HOME\.config\powershell\dirs.ps1
 
 # Utilities
 
@@ -55,10 +57,15 @@ function acp($message) {
     git push origin HEAD
 }
 
+## add and commit 
+function gcommit($dir, $message) {
+  git add "$dir"
+  git commit -m "$message"
+}
+
 ## delete local branch
 function gdelete($branch) {
 	git branch -D $branch
 }
 
-### STARSHIP THEME
-function star { Invoke-Expression (&starship init powershell) }
+

@@ -38,7 +38,6 @@ setx AZURE_CLIENT_SECRET="Rmm8Q~0H2ZHS4i2k6cklEYHfgzfyG24qYGtmkcfC"
 setx SqlConnectionString="Server=tcp:129.232.234.172,50020;Initial Catalog=AzureAD;Persist Security Info=False;User ID=sa;Password=F27035vRXxoSMeGU9kZs;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;"
 
 # UPDATE SCRIPTS
-
 function pywal_to_starship {
 	Update-WalTerminal *>&1;
 	bash ~/dev/winwaltostarship.sh;
