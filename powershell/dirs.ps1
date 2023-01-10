@@ -1,10 +1,10 @@
 # Work repos
 
 ### CHRONODESK
-function chrono { cd "C:\Rysis\Git\rysis-chronolog\" }
-function chronoApi { cd "C:\Rysis\Git\rysis-chronolog\Timesheet_API\" }
-function chronoWeb { cd "C:\Rysis\Git\rysis-chronolog\Timesheet_Web\ClientApp\" }
-function chronoSql { cd "C:\Rysis\Git\rysis-chronolog\Timesheet_Midtier\SqlProxyClassGen\" }
+function chrono { cd "D:\Rysis\Git\rysis-chronolog\" }
+function chronoApi { cd "D:\Rysis\Git\rysis-chronolog\Timesheet_API\" }
+function chronoWeb { cd "D:\Rysis\Git\rysis-chronolog\Timesheet_Web\ClientApp\" }
+function chronoSql { cd "D:\Rysis\Git\rysis-chronolog\Timesheet_Midtier\SqlProxyClassGen\" }
 
 ### VISIBILL
 function visibill { cd "D:\Rysis\Git\visibill-4\" }
@@ -21,6 +21,15 @@ function veloSql { cd "D:\Rysis\Git\rysis-driverisk2\DriveRisk.Midtier\SqlProxyC
 ### DRIVERISK
 function drive { cd "D:\Rysis\Git\rysis-driverisk\" }
 function drops { cd "D:\Rysis\Git\rysis-driverisk\DriveRisk.Drops.WebApp\" }
+
+### DRIVERISK ADMIN
+function driveAdmin { cd "D:\Rysis\Git\driverisk-admin" }
+function driveApi { cd "D:\Rysis\Git\driverisk-admin\DriveRisk.Admin.Api" }
+function driveWeb { cd "D:\Rysis\Git\driverisk-admin\DriveRisk.Admin.Webapp" }
+function driveSql { cd "D:\Rysis\Git\driverisk-admin\DriveRisk.Admin.Midtier\ProxyGeneration" }
+
+### DRIVERISK SERVICES
+function driveService { cd "D:\Rysis\Git\driverisk-services\DriveRisk.DriverDispatch" }
 
 ### SAHCS
 function sahiv { cd "D:\Rysis\GIT\rysis-sahiv\Website\" }
@@ -45,6 +54,6 @@ function press { cd "D:\Rysis\Git\rysis-pressombudsman\" }
 function pressSql { cd "D:\Rysis\Git\rysis-pressombudsman\PressOmbudsman.Midtier\Bat2\" }
 
 ### PERSONAL DIR
-function omoiDev { cd "C:\Users\nhlan\Desktop\Development" }
-function omoiGit { cd "C:\Users\nhlan\Desktop\Development\Git" }
-function omoiSite { cd "C:\Users\nhlan\Desktop\Development\Git\portfolio" }
+function omoiDev { cd "D:\nhlan\Desktop\Development" }
+function omoiGit { cd "D:\nhlan\Desktop\Development\Git" }
+function omoiSite { cd "D:\nhlan\Desktop\Development\Git\portfolio" }
