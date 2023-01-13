@@ -1,4 +1,6 @@
 # Work repos
+function rysis { cd "D:\Rysis\" }
+function rysisGit { cd "D:\Rysis\Git\" }
 
 ### CHRONODESK
 function chrono { cd "D:\Rysis\Git\rysis-chronolog\" }
@@ -29,7 +31,10 @@ function driveWeb { cd "D:\Rysis\Git\driverisk-admin\DriveRisk.Admin.Webapp" }
 function driveSql { cd "D:\Rysis\Git\driverisk-admin\DriveRisk.Admin.Midtier\ProxyGeneration" }
 
 ### DRIVERISK SERVICES
-function driveService { cd "D:\Rysis\Git\driverisk-services\DriveRisk.DriverDispatch" }
+function driveService { cd "D:\Rysis\Git\driverisk-services\" }
+function driveDispatch { cd "D:\Rysis\Git\driverisk-services\DriveRisk.DriverDispatch" }
+function driveEW { cd "D:\Rysis\Git\driverisk-services\DriveRisk.EarlyWarning.SoapMonitoring\" }
+function driveVS { cd "D:\Rysis\Git\driverisk-services\DriveRisk.DriverDispatch\DriveRisk.VelocityServices" }
 
 ### SAHCS
 function sahiv { cd "D:\Rysis\GIT\rysis-sahiv\Website\" }
