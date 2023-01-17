@@ -32,11 +32,6 @@ $env:GIT_SSH = "C:\Windows\system32\OpenSSH\ssh.exe"
 $env:STARSHIP_CONFIG = "$HOME\.config\starship\ChristianLempa.toml"
 $env:STARSHIP_DISTRO = "者 omoi"
 
-set AZURE_CLIENT_ID="986bb8d1-398c-4ba2-a742-337b695b22cb"
-set AZURE_TENANT_ID="6036bd51-a797-4615-9c21-4c0933294a33"
-set AZURE_CLIENT_SECRET="Rmm8Q~0H2ZHS4i2k6cklEYHfgzfyG24qYGtmkcfC"
-set SqlConnectionString="Server=tcp:129.232.234.172,50020;Initial Catalog=AzureAD;Persist Security Info=False;User ID=sa;Password=F27035vRXxoSMeGU9kZs;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;"
-
 # UPDATE SCRIPTS
 function pywal_to_starship {
 	Update-WalTerminal *>&1;
