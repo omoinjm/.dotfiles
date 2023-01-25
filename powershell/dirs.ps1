@@ -58,6 +58,7 @@ function execSql { cd "D:\Rysis\Git\rysis-execmobile\ExecMobile\ExecMobile.Sql\S
 function press { cd "D:\Rysis\Git\rysis-pressombudsman\" }
 function pressSql { cd "D:\Rysis\Git\rysis-pressombudsman\PressOmbudsman.Midtier\Bat2\" }
 # complaints
+function pressCom { cd "D:\Rysis\Git\rysis-pressombudsman\ComplaintsManagement\" }
 function pressComWeb { cd "D:\Rysis\Git\rysis-pressombudsman\ComplaintsManagement\ComplaintsManagement.Web\ClientApp" }
 function pressComApi { cd "D:\Rysis\Git\rysis-pressombudsman\ComplaintsManagement\ComplaintsManagement.Api" }
 
