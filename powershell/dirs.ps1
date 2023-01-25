@@ -57,6 +57,9 @@ function execSql { cd "D:\Rysis\Git\rysis-execmobile\ExecMobile\ExecMobile.Sql\S
 ### PRESS COUNCIL
 function press { cd "D:\Rysis\Git\rysis-pressombudsman\" }
 function pressSql { cd "D:\Rysis\Git\rysis-pressombudsman\PressOmbudsman.Midtier\Bat2\" }
+# complaints
+function pressComWeb { cd "D:\Rysis\Git\rysis-pressombudsman\ComplaintsManagement\ComplaintsManagement.Web\ClientApp" }
+function pressComApi { cd "D:\Rysis\Git\rysis-pressombudsman\ComplaintsManagement\ComplaintsManagement.Api" }
 
 ### PERSONAL DIR
 function omoiDev { cd "D:\nhlan\Desktop\Development" }
