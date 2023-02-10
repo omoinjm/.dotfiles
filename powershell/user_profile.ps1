@@ -13,7 +13,7 @@ Import-Module Terminal-Icons
 
 ## Load prompt config
 function Get-ScriptDirectory { Split-Path $MyInvocation.ScriptName }
-$PROMPT_CONFIG = Join-Path (Get-ScriptDirectory) 'themes/json.omp.json'
+$PROMPT_CONFIG = Join-Path (Get-ScriptDirectory) 'themes/tokyonight_storm.omp.json'
 oh-my-posh --init --shell pwsh --config $PROMPT_CONFIG | Invoke-Expression
 
 # PSReadLine
