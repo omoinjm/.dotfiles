@@ -22,6 +22,7 @@ function veloSql { cd "D:\Rysis\Git\rysis-driverisk2\DriveRisk.Midtier\SqlProxyC
 
 ### DRIVERISK
 function drive { cd "D:\Rysis\Git\rysis-driverisk\" }
+function driveReports { cd "D:\Rysis\Git\rysis-driverisk\DriveRisk.Consolidated.Report\DriveRisk.Consolidated.Report" }
 function drops { cd "D:\Rysis\Git\rysis-driverisk\DriveRisk.Drops.WebApp\" }
 
 ### DRIVERISK ADMIN
