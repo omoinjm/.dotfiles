@@ -44,6 +44,7 @@ Requires [Neovim](https://neovim.io/) (>= 0.8)
 ## Shell setup (macOS & Linux)
 
 <!-- - [Fish shell](https://fishshell.com/) -->
+
 - [Fisher](https://github.com/jorgebucaran/fisher) - Plugin manager
 - [Tide](https://github.com/IlanCosman/tide) - Shell theme. Use version 5: `fisher install ilancosman/tide@v5`
 - [Nerd fonts](https://github.com/ryanoasis/nerd-fonts) - Powerline-patched fonts. I use Hack.
@@ -77,6 +78,6 @@ Read my blogs:
 
 ## About me
 
-- [Twitter @nhlanhlamalaza_](https://twitter.com/nhlanhlamalaza_)
+- [Twitter @nhlanhlamalaza\_](https://twitter.com/nhlanhlamalaza_)
 <!-- - [Blog](https://blog.inkdrop.app/) -->
-- [Personal Portfolio](https://njmportfolio.vercel.app/)
+- [Personal Portfolio](https://njmtech.vercel.app/)
