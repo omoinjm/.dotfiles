@@ -11,8 +11,6 @@ Set-Alias -Name Screenshot-Starship -Value screenshot_to_pywal_to_starship
 Set-Alias -Name vim nvim
 Set-Alias -Name curl -Value "C:\Program Files\Git\mingw64\bin\curl.exe" -Option AllScope
 
-## Directoies
-. $HOME\.config\powershell\dirs.ps1
 
 # Utilities
 
