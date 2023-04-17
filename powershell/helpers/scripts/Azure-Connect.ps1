@@ -15,11 +15,11 @@ $credential = New-Object System.Management.Automation.PSCredential ($username, $
 $SecureStringPassword = ConvertTo-SecureString -String $clientSecret -AsPlainText -Force
 $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $clientId, $SecureStringPassword
 
-function az-connect {
+function Az-Connect {
   Connect-AzureAD -TenantId $tenantId -Credential $Credential
 }
 
-function azure-connect { 
+function Azure-Connect { 
   Connect-AzureAD -Credential $credential
 }
 

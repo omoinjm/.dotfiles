@@ -7,12 +7,9 @@ Set-Alias g git
 Set-Alias grep findstr
 Set-Alias idea idea64
 Set-Alias -Name eth -Value Get-NetAdapter
-Set-Alias -Name Pywal-Starship -Value pywal_to_starship
-Set-Alias -Name Wallpaper-Starship -Value update_pywal_to_starship
-Set-Alias -Name Screenshot-Starship -Value screenshot_to_pywal_to_starship
 Set-Alias -Name vim nvim
 Set-Alias -Name curl -Value "C:\Program Files\Git\mingw64\bin\curl.exe" -Option AllScope
-
+Set-Alias -Name openvpn -Value "C:\Program Files\OpenVPN\bin\openvpn.exe" -Option AllScope
 
 # Utilities
 
