@@ -1,0 +1,107 @@
+{
+  "explorer.confirmDragAndDrop": false,
+  "js/ts.implicitProjectConfig.experimentalDecorators": true,
+  "workbench.iconTheme": "icons",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "explorer.confirmDelete": false,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.suggest.insertMode": "replace"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "editor.formatOnSave": false, // changes linting
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "tabnine.experimentalAutoImports": true,
+  "prettier.endOfLine": "auto",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.singleQuote": false,
+  "prettier.useTabs": true,
+  "editor.fontSize": 12,
+  "editor.mouseWheelZoom": true,
+  "javascript.suggest.autoImports": false, // changes import order
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.sortImports": false // changes import order
+  },
+  "settingsSync.ignoredSettings": [],
+  "editor.tabSize": 3,
+  "liveServer.settings.AdvancedCustomBrowserCmdLine": "",
+  "kite.showWelcomeNotificationOnStartup": false,
+  "terminal.integrated.fontFamily": "Hack NF",
+  "rest-client.fontFamily": "",
+  "vs-kubernetes": {
+    "vscode-kubernetes.minikube-path.windows": "C:\\Users\\nhlan\\.vs-kubernetes\\tools\\minikube\\windows-amd64\\minikube.exe",
+    "vscode-kubernetes.helm-path.windows": "C:\\Users\\nhlan\\.vs-kubernetes\\tools\\helm\\windows-amd64\\helm.exe",
+    "vs-kubernetes.minikube-show-information-expiration": "2022-11-24T22:17:22.338Z"
+  },
+  "htmlhint.options": {
+    "attr-lowercase": false,
+    "doctype-first": false
+  },
+  "yaml.customTags": [
+    "!And",
+    "!And sequence",
+    "!If",
+    "!If sequence",
+    "!Not",
+    "!Not sequence",
+    "!Equals",
+    "!Equals sequence",
+    "!Or",
+    "!Or sequence",
+    "!FindInMap",
+    "!FindInMap sequence",
+    "!Base64",
+    "!Join",
+    "!Join sequence",
+    "!Cidr",
+    "!Ref",
+    "!Sub",
+    "!Sub sequence",
+    "!GetAtt",
+    "!GetAZs",
+    "!ImportValue",
+    "!ImportValue sequence",
+    "!Select",
+    "!Select sequence",
+    "!Split",
+    "!Split sequence"
+  ],
+  "powershell.powerShellDefaultVersion": "Windows PowerShell (x64)",
+  "rapidapi.terminalLink.enabled": false,
+  "workbench.layoutControl.enabled": false,
+  "workbench.statusBar.visible": false,
+  "terminal.integrated.gpuAcceleration": "off",
+  "editor.linkedEditing": true,
+  "redhat.telemetry.enabled": true,
+  "git.autofetch": true,
+  "workbench.colorTheme": "Visual Studio 2019 Dark",
+  "editor.accessibilitySupport": "off",
+  "editor.unicodeHighlight.invisibleCharacters": false,
+  "powershell.codeFormatting.trimWhitespaceAroundPipe": true,
+  "powershell.codeFormatting.useConstantStrings": true,
+  "powershell.codeFormatting.useCorrectCasing": true,
+  "powershell.codeFormatting.whitespaceBetweenParameters": true,
+  "powershell.codeFormatting.autoCorrectAliases": true,
+  "editor.wordWrap": "off", // wrap
+  "diffEditor.wordWrap": "on",
+  "editor.wordWrapColumn": 70,
+  "files.eol": "\n",
+  "editor.minimap.enabled": false
+}
