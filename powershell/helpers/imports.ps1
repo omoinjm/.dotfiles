@@ -16,6 +16,7 @@ Import-Module Terminal-Icons
 ## scripts and programs
 . $HOME\.config\powershell\helpers\scripts\Azure-Connect.ps1
 . $HOME\.config\powershell\helpers\scripts\Curl-Discord.ps1
+. $HOME\.config\powershell\helpers\scripts\AzureEnvSettings.ps1
 
 ## command line themes
 . $HOME\.config\powershell\helpers\themes\themes.ps1
