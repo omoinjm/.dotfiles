@@ -11,6 +11,7 @@ Set-Alias -Name vim nvim
 Set-Alias -Name curl -Value "C:\Program Files\Git\mingw64\bin\curl.exe" -Option AllScope
 Set-Alias -Name openvpn -Value "C:\Program Files\OpenVPN\bin\openvpn.exe" -Option AllScope
 Set-Alias -Name obsidian -Value "C:\Users\nhlan\AppData\Local\Obsidian\Obsidian.exe" -Option AllScope
+Set-Alias -Name iis -Value "C:\Program Files\IIS Express\iisexpress.exe" -Option AllScope
 
 # Utilities
 
