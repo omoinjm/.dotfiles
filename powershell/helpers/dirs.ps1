@@ -49,9 +49,19 @@ function d_dispatch { d_svc; cd "DriveRisk.DriverDispatch\" }
 function d_ew { d_svc; cd "DriveRisk.EarlyWarning.SoapMonitoring\" }
 function d_vs {  d_svc; cd "DriveRisk.DriverDispatch\DriveRisk.VelocityServices\" }
 
+### DRIVERISK LYTX
+function d_lytx { optix; cd "driverisk-lytx\" }
+
+### DRIVERISK TELEMATICS
+function d_telematics { optix; cd "driverisk-telematics\" }
+
+### DRIVERISK Mail Engine
+function d_mail { optix; cd "driverisk-mail" }
+
 ### SAHCS
 function sahiv { r_git; cd "rysis-sahiv\" }
 function s_website { sahiv; cd "Website\" }
+function s_mvc { s_website; cd "SahivV2.MVC\" }
 function s_api { s_website; cd "SahivV3_Api\" }
 function s_sql { s_website; cd "Sahiv.Midtier2\Bat2\" }
 function s_web { s_website; cd "SahivV3_Angular\ClientApp\" }
