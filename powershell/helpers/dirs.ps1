@@ -19,7 +19,7 @@ function v_sql { v4; cd "Visibill_Midtier\SqlProxyClassGen\" }
 function v_admin { visibill; cd "visibill-admin\" }
 function v_admin_api { v_admin; cd "Visibill.Admin.Api\" }
 function v_admin_web { v_admin; cd "Visibill.Admin.Webapp\" }
-function v_admin_sql { v_admin; cd "Visibill.Admin.Midtier\SqlProxyClassGen\" }
+function v_admin_sql { v_admin; cd "Visibill.Admin.Midtier\ProxyGeneration\" }
 
 function v_svc { visibill; cd "visibill-services\" }
 
