@@ -1,5 +1,11 @@
 # Set up process
 
+Profile directory
+
+```powershell
+. $HOME\.config\powershell\user_profile.ps1
+```
+
 1. Install Terminal Icons
   
   - Install-Module -Name Terminal-Icons -Repository PSGallery -Force
