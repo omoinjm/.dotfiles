@@ -25,3 +25,18 @@ Install-Module -Name PSReadLine -Scope CurrentUser -Force -SkipPublisherCheck
 
 Install-Module -Name PSReadLine -AllowPrerelease -Scope CurrentUser -Force -SkipPublisherCheck
 ```
+
+Other / Helpful packages
+
+```powershell
+Install-Module -Name posh-git -Force
+
+ Install-Module -Name AzureAD -Force
+
+Install-Module -Name NuGet -Force
+
+Install-Module -Name Microsoft.Graph.Users -Force
+
+sudo Install-Module -Name Microsoft.Graph.Authentication -Force
+
+```
