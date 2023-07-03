@@ -28,11 +28,17 @@ Install-Module -Name PSReadLine -Scope CurrentUser -Force -SkipPublisherCheck
 Install-Module -Name PSReadLine -AllowPrerelease -Scope CurrentUser -Force -SkipPublisherCheck
 ```
 
-Other / Helpful packages
+4. Install Oh My Posh
 
 ```powershell
 Install-Module -Name posh-git -Force
 
+winget install oh-my-posh --source winget
+```
+
+Other / Helpful packages
+
+```powershell
  Install-Module -Name AzureAD -Force
 
 Install-Module -Name NuGet -Force
