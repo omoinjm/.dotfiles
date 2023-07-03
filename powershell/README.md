@@ -16,6 +16,8 @@ Install-Module -Name Terminal-Icons -Repository PSGallery -Force
 
 ```powershell
 Install-Module -Name PSFzf -Scope CurrentUser -Force
+
+scoop install fzf
 ```
 
 3. Install Intellisence
