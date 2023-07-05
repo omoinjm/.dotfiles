@@ -1,31 +1,29 @@
 # Nuget package imports
+Import-Module NuGet
 Import-Module AzureAD
 Import-Module PackageManagement
-Import-Module NuGet
-Import-Module Microsoft.Graph.Users
 # Import-Module Microsoft.Graph
+Import-Module Microsoft.Graph.Users
 Import-Module Microsoft.Graph.Authentication 
-Import-Module PSFzf
 
-## Prompt
-Import-Module posh-git
+Set-Variable -Name path -Value "$env:dotfiles\powershell\helpers" -Option Constant
 
-## Icons
-Import-Module Terminal-Icons
+# Icons
+Import-Module -Name Terminal-Icons
 
-## scripts and programs
-. $HOME\.config\powershell\helpers\scripts\Azure-Connect.ps1
-. $HOME\.config\powershell\helpers\scripts\Curl-Discord.ps1
-. $HOME\.config\powershell\helpers\scripts\AzureEnvSettings.ps1
+# Scripts and programs
+Import-Module -Name "$path\scripts\exports.ps1"
 
-## command line themes
-. $HOME\.config\powershell\helpers\themes\themes.ps1
+# Command line themes
+Import-Module -Name "$path\themes\themes.ps1"
 
-## directories
-. $HOME\.config\powershell\helpers\dirs.ps1
+# Directories
+Import-Module -Name "$path\directories\dirs.ps1"
+Import-Module -Name "$path\directories\p_dirs.ps1"
 
-## function commands
-. $HOME\.config\powershell\helpers\aliases.ps1
+# Function commands
+Import-Module -Name "$path\aliases.ps1"
 
-## environment variables
-. $HOME\.config\powershell\helpers\env\env.ps1
+# Environment variables
+Import-Module -Name "$path\env\env.ps1"
+Import-Module -Name "$path\..\work\secrets.ps1"

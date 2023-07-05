@@ -1,4 +1,4 @@
-. $HOME\.config\powershell\helpers\env\driverisk.ps1
+. $HOME\.config\dotfiles\powershell\helpers\env\driverisk.ps1
 
 # Environment variables
 $env:GIT_SSH = "C:\Windows\system32\OpenSSH\ssh.exe"

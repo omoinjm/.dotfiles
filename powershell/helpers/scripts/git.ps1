@@ -24,16 +24,3 @@ function acp($message) {
    git commit -m "$message"
    git push origin HEAD
 }
-
-## add and commit 
-function gcommit($dir, $message) {
- git add "$dir"
- git commit -m "$message"
-}
-
-## delete local branch
-function gdelete($branch) {
-  git branch -D $branch
-}
-
-
