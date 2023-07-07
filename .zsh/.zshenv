@@ -3,13 +3,14 @@
 # export PATH=$PATH:$HOME/Projects/christianlempa/central-cli
 
 # NVM directory
-export NVM_DIR="$HOME/.nvm"
+# export NVM_DIR="$HOME/.nvm"
 
 # Vagrant config needed inside WSL2
 # export VAGRANT_DEFAULT_PROVIDER="hyperv"
 export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
 export STARSHIP_CONFIG=~/.config/starship.toml
-# export EDITOR=hx
+
+export EDITOR=vim
 # export KUBE_EDITOR=hx
 
 # export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
