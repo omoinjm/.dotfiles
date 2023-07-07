@@ -1,10 +1,16 @@
-alias cls=clear
+# Alias
+# ---
+#
 alias ls='ls --color=auto'
-alias ll='ls -l'
+alias grep='grep --color'
 alias lla='ls -la'
+alias k="kubectl"
+alias ll='ls -l'
 alias la='ls -A'
+alias cls=clear
 alias vim=nvim
 alias vi=nvim
+
 # alias l='ls -F'
 command -v lsd > /dev/null && alias ls='lsd --group-dirs first' && \
 	alias tree='lsd --tree'
