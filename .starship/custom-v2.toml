@@ -1,4 +1,4 @@
-format = """
+format = '''
 [](#9A348E)\
 $username\
 [](bg:#DA627D fg:#9A348E)\
@@ -23,7 +23,7 @@ $docker_context\
 [](fg:#06969A bg:#33658A)\
 $time\
 [ ](fg:#33658A)\
-"""
+'''
 
 # Disable the blank line at the start of the prompt
 # add_newline = false
@@ -121,4 +121,3 @@ disabled = false
 time_format = "%R" # Hour:Minute Format
 style = "bg:#33658A"
 format = '[ ♥ $time ]($style)'
-

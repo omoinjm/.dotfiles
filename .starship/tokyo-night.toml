@@ -1,0 +1,167 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = true
+
+format = """
+[ ➜ ](fg:#7aa2f7 bg:transparent)\
+$directory\
+[ \u26a1](fg:#7dcfff bg:transparent)\
+$git_branch\
+$git_status\
+    $fill\
+    $nodejs\
+    $c\
+    $rust\
+    $golang\
+    $java\
+    $php\
+    $dotnet\
+    $docker_context\
+\n$shell"""
+
+[fill]
+symbol=" "
+
+[memory_usage]
+disabled = false
+symbol = " "
+threshold = -1
+format = " [$symbol$ram](#656555)"
+
+[username]
+show_always = true
+format = "[$user](#656555)"
+
+[hostname]
+ssh_only= false
+format = "[$hostname](#656555)"
+disabled = false
+
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+style = "bg:#1d2230"
+format = '[[  $time ](fg:#a0a9cb bg:#transparent)]($style)'
+
+[directory]
+style = "fg:#bb9af7"
+format = "[$path]($style)"
+truncation_length = 1
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+
+[package]
+symbol =" "
+display_private = false
+version_format = "v${raw}"
+format = "[$symbol$version](#67696B)"
+
+[shell]
+powershell_indicator = "_"
+fish_indicator = "🐟"
+cmd_indicator = "_"
+bash_indicator = ""
+zsh_indicator = ""
+disabled = false
+style = "fg:#9ece6a"
+format = "[$indicator]($style)"
+
+# Replace the '❯' symbol in the prompt with '➜'
+[character]
+success_symbol = '[➜](fg:#7aa2f7)'
+
+#=== git ===
+
+[git_branch]
+symbol = ""
+style = "bg:#394260"
+format = '[[ $symbol $branch ](fg:#7dcfff bg:transparent)]($style)'
+
+[git_status]
+style = "bg:#394260"
+stashed = "\uf692 \\(${count}\\) "
+ahead = "⇡${count} "
+behind = "⇣${count} "
+diverged = "⇕${ahead_count} ${behind_count} "
+conflicted = "=${count} "
+modified = "[\uf044 ?(${count})](fg:#769ff0 bg:transparent) "
+untracked = "~(${count}) "
+deleted = "[-${count}](fg:#769ff0 bg:transparent) "
+renamed = "»${count} "
+staged = "[\u26a1 ${count}](fg:#769ff0 bg:transparent) "
+up_to_date = ""
+format = '[[($all_status$ahead_behind )](fg:#769ff0 bg:transparent)]($style)'
+
+#=== cloud ===
+[azure]
+disabled = false
+format = 'on [$symbol($subscription)]($style) '
+symbol = '󰠅 '
+
+[aws]
+format = 'on [$symbol($profile )(\($region\) )]($style)'
+symbol = '  '
+[aws.region_aliases]
+ap-southeast-2 = 'au'
+us-east-1 = 'va'
+[aws.profile_aliases]
+CompanyGroupFrobozzOnCallAccess = 'Frobozz'
+
+
+#=== languages ===
+
+[c]
+symbol = " "
+style = "bg:transparent"
+format = '[ $symbol ($version) ]($style)'
+
+[docker_context]
+symbol = " "
+style = "bg:transparent"
+format = '[ $symbol $context ]($style)'
+
+[java]
+symbol = " "
+style = "bg:transparent"
+format = '[ $symbol ($version) ]($style)'
+
+[nodejs]
+symbol = "\uf898"
+style = "bg:transparent"
+format = '[[ $symbol ($version) ](fg:#9ece6a)]($style)'
+
+[rust]
+symbol = ""
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:transparent)]($style)'
+
+[golang]
+symbol = "\uFCD1"
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:transparent)]($style)'
+
+[php]
+symbol = "\ue73d"
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[python]
+symbol = "\uE235"
+pyenv_prefix = 'pyenv '
+python_binary = "python"
+format = '[$symbol$pyenv_prefix$version(\($virtualenv\))](#cebdac)'
+
+[dotnet]
+symbol = "  "
+heuristic = true
+# detect_extensions = "['csproj', 'fsproj', 'xproj']"
+# detect_files = "['global.json', 'project.json', 'Directory.Build.props', 'Directory.Build.targets', 'Packages.props']"
+style = "bg:transparent"
+version_format = "v${raw}"
+format = "via [$symbol($version)]($style)"
