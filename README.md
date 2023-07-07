@@ -1,11 +1,15 @@
 # Personal dotfiles
 
+`POWERSHELL`
 ![pwsh screenshot](./images/pwsh.png)
 
+`NEOVIM`
 ![nvim screenshot](./images/vim.png)
 
+`ZSH`
 ![zsh screenshot](./images/zsh.png)
 
+`TMUX`
 ![tmux screenshot](./images/tmux.png)
 
 ## Contents
