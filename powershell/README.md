@@ -3,7 +3,7 @@
 Profile directory
 
 ```powershell
-. $HOME\.config\powershell\user_profile.ps1
+. $env:dotfiles\powershell\user_profile.ps1
 ```
 
 1. Install Terminal Icons
