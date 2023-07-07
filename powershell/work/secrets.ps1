@@ -1,3 +1,5 @@
+Import-Module -Name "$env:dotfiles\powershell\work\env.ps1"
+
 # Optix Azure Secrets
 $env:optix_sub = '2e3867b0-d7d6-4e7a-a16c-becdbd1d54da'
 $env:username = 'junior.malaza@rysis.co.za'
