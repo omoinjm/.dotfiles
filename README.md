@@ -4,6 +4,10 @@
 
 ![nvim screenshot](./images/vim.png)
 
+![zsh screenshot](./images/zsh.png)
+
+![tmux screenshot](./images/tmux.png)
+
 ## Contents
 
 - vim (NeoVim) config
