@@ -1,5 +1,5 @@
 # Prompt
-oh-my-posh init pwsh | Invoke-Expression
+# oh-my-posh init pwsh | Invoke-Expression
 
 # Load prompt config
 #function Get-ScriptDirectory { Split-Path $MyInvocation.ScriptName }
