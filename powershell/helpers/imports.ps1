@@ -25,5 +25,4 @@ Import-Module -Name "$path\directories\p_dirs.ps1"
 Import-Module -Name "$path\aliases.ps1"
 
 # Environment variables
-Import-Module -Name "$path\env\env.ps1"
 Import-Module -Name "$path\..\work\secrets.ps1"

@@ -2,13 +2,31 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 # Inserts a blank line between shell prompts
-add_newline = true
+add_newline = false
+
+# Set 'foo' as custom color palette
+# palette = "foo"
+
+# # # Define custom colors
+# [palettes.foo]
+
+# # Overwrite existing color
+# purple = "#7aa2f7"
+# blue = "#7dcfff"
+# grey = "#a0a9cb"  
+# cyan = "#67696B"
+# green = "#9ece6a"
+# red = "#f7768e"
+# magenta = "bb9af7"
+
+continuation_prompt = '[➜ ](fg:#7aa2f7 bg:transparent) '
 
 format = """
-[ ➜ ](fg:#7aa2f7 bg:transparent)\
+[➜ ](fg:#7aa2f7 bg:transparent)\
 $directory\
 [ \u26a1](fg:#7dcfff bg:transparent)\
 $git_branch\
+[\u2630 ](fg:#7dcfff bg:transparent)\
 $git_status\
     $fill\
     $nodejs\
@@ -19,30 +37,37 @@ $git_status\
     $php\
     $dotnet\
     $docker_context\
-\n$shell"""
+    $time\
+\n$shell \
+"""
+
+[character]
+success_symbol = '[➜](fg:#7aa2f7)'
+disabled = true
 
 [fill]
 symbol=" "
+disabled = false
 
 [memory_usage]
-disabled = false
+disabled = true
 symbol = " "
 threshold = -1
 format = " [$symbol$ram](#656555)"
 
 [username]
-show_always = true
+show_always = false
 format = "[$user](#656555)"
 
 [hostname]
-ssh_only= false
+ssh_only = false
 format = "[$hostname](#656555)"
-disabled = false
+disabled = true
 
 [time]
 disabled = false
 time_format = "%R" # Hour:Minute Format
-style = "bg:#1d2230"
+style = "bg:transparent"
 format = '[[  $time ](fg:#a0a9cb bg:#transparent)]($style)'
 
 [directory]
@@ -63,7 +88,7 @@ version_format = "v${raw}"
 format = "[$symbol$version](#67696B)"
 
 [shell]
-powershell_indicator = "_"
+powershell_indicator = "_ "
 fish_indicator = "🐟"
 cmd_indicator = "_"
 bash_indicator = ""
@@ -72,31 +97,27 @@ disabled = false
 style = "fg:#9ece6a"
 format = "[$indicator]($style)"
 
-# Replace the '❯' symbol in the prompt with '➜'
-[character]
-success_symbol = '[➜](fg:#7aa2f7)'
-
 #=== git ===
 
 [git_branch]
 symbol = ""
-style = "bg:#394260"
-format = '[[ $symbol $branch ](fg:#7dcfff bg:transparent)]($style)'
+style = "bg:transparent"
+format = '[[$symbol $branch ](fg:#7dcfff bg:transparent)]($style)'
 
 [git_status]
-style = "bg:#394260"
-stashed = "\uf692 \\(${count}\\) "
+style = "bg:transparent"
+stashed = "\uf692 (${count}) "
 ahead = "⇡${count} "
 behind = "⇣${count} "
 diverged = "⇕${ahead_count} ${behind_count} "
 conflicted = "=${count} "
-modified = "[\uf044 ?(${count})](fg:#769ff0 bg:transparent) "
-untracked = "~(${count}) "
-deleted = "[-${count}](fg:#769ff0 bg:transparent) "
+modified = "[\uf044 ?(${count})](fg:#f7768e bg:transparent) "
+untracked = "[~${count}](fg:#f7768e bg:transparent)"
+deleted = "[-${count}](fg:#f7768e bg:transparent) "
 renamed = "»${count} "
-staged = "[\u26a1 ${count}](fg:#769ff0 bg:transparent) "
+staged = "[\u26a1 ${count}](fg:#f7768e bg:transparent) "
 up_to_date = ""
-format = '[[($all_status$ahead_behind )](fg:#769ff0 bg:transparent)]($style)'
+format = '[[($all_status$ahead_behind )](fg:##f7768e bg:transparent)]($style)'
 
 #=== cloud ===
 [azure]
@@ -149,7 +170,7 @@ format = '[[ $symbol ($version) ](fg:#769ff0 bg:transparent)]($style)'
 [php]
 symbol = "\ue73d"
 style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:transparent)]($style)'
 
 [python]
 symbol = "\uE235"

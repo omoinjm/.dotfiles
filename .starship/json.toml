@@ -1,0 +1,188 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = false
+
+# Set 'foo' as custom color palette
+# palette = "foo"
+
+# # # Define custom colors
+# [palettes.foo]
+
+# # Overwrite existing color
+# purple = "#7aa2f7"
+# blue = "#7dcfff"
+# grey = "#a0a9cb"  
+# cyan = "#43CCEA"
+# green = "#42E66C"
+# red = "#ff0000"
+# magenta = "#bb9af7"
+# yellow = "#F1FA8C"
+
+continuation_prompt = '[> ](fg:bright-black bg:transparent) '
+
+format = """
+[\u2B22 ](fg:#42E66C bg:transparent)\
+$directory\
+$git_branch\
+[\u2630 ](fg:#43CCEA bg:transparent)\
+$git_status\
+[ \u25C9](fg:#ff0000 bg:transparent)\
+    $fill\
+    $nodejs\
+    $c\
+    $rust\
+    $golang\
+    $java\
+    $php\
+    $dotnet\
+    $docker_context\
+\n$shell \
+"""
+
+[character]
+success_symbol = '[>](fg:bright-black)'
+disabled = true
+
+[fill]
+symbol=" "
+disabled = false
+
+[memory_usage]
+disabled = true
+symbol = " "
+threshold = -1
+format = " [$symbol$ram](#656555)"
+
+[username]
+show_always = false
+format = "[$user](#656555)"
+
+[hostname]
+ssh_only = false
+format = "[$hostname](#656555)"
+disabled = true
+
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+style = "bg:transparent"
+format = '[[  $time ](fg:#a0a9cb bg:#transparent)]($style)'
+
+[directory]
+style = "fg:#F1FA8C"
+format = "[$path]($style) "
+truncation_length = 1
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+
+[package]
+symbol =" "
+display_private = false
+version_format = "v${raw}"
+format = "[$symbol$version](#67696B)"
+
+[shell]
+powershell_indicator = "_ "
+fish_indicator = "🐟"
+cmd_indicator = "_"
+bash_indicator = ""
+zsh_indicator = ""
+disabled = false
+style = "fg:bright-black"
+format = "[$indicator]($style)"
+
+#=== git ===
+
+[git_branch]
+symbol = ""
+style = "bg:transparent"
+format = '[[$symbol $branch ](fg:#43CCEA bg:transparent)]($style)'
+
+[git_status]
+style = "bg:transparent"
+stashed = "\uf692 (${count}) "
+ahead = "⇡${count} "
+behind = "⇣${count} "
+diverged = "⇕${ahead_count} ${behind_count} "
+conflicted = "=${count} "
+modified = "[\uf044 ?(${count})](fg:#43CCEA bg:transparent) "
+untracked = "[~${count}](fg:#43CCEA bg:transparent)"
+deleted = "[-${count}](fg:#43CCEA bg:transparent) "
+renamed = "»${count} "
+staged = "[\u26a1 ${count}](fg:#43CCEA bg:transparent) "
+up_to_date = ""
+format = '[[($all_status$ahead_behind )](fg:##43CCEA bg:transparent)]($style)'
+
+#=== cloud ===
+[azure]
+disabled = false
+format = 'on [$symbol($subscription)]($style) '
+symbol = '󰠅 '
+
+[aws]
+format = 'on [$symbol($profile )(\($region\) )]($style)'
+symbol = '  '
+[aws.region_aliases]
+ap-southeast-2 = 'au'
+us-east-1 = 'va'
+[aws.profile_aliases]
+CompanyGroupFrobozzOnCallAccess = 'Frobozz'
+
+
+#=== languages ===
+
+[c]
+symbol = " "
+style = "bg:transparent"
+format = '[ $symbol ($version) ]($style)'
+
+[docker_context]
+symbol = " "
+style = "bg:transparent"
+format = '[ $symbol $context ]($style)'
+
+[java]
+symbol = " "
+style = "bg:transparent"
+format = '[ $symbol ($version) ]($style)'
+
+[nodejs]
+symbol = "\uf898"
+style = "bg:transparent"
+format = '[[ $symbol ($version) ](fg:#9ece6a)]($style)'
+
+[rust]
+symbol = ""
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:transparent)]($style)'
+
+[golang]
+symbol = "\uFCD1"
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:transparent)]($style)'
+
+[php]
+symbol = "\ue73d"
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:transparent)]($style)'
+
+[python]
+symbol = "\uE235"
+pyenv_prefix = 'pyenv '
+python_binary = "python"
+format = '[$symbol$pyenv_prefix$version(\($virtualenv\))](#cebdac)'
+
+[dotnet]
+symbol = "  "
+heuristic = true
+# detect_extensions = "['csproj', 'fsproj', 'xproj']"
+# detect_files = "['global.json', 'project.json', 'Directory.Build.props', 'Directory.Build.targets', 'Packages.props']"
+style = "bg:transparent"
+version_format = "v${raw}"
+format = "via [$symbol($version)]($style)"
