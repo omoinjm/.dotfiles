@@ -22,6 +22,8 @@ add_newline = false
 
 continuation_prompt = '[> ](fg:bright-black bg:transparent) '
 
+command_timeout = 300
+
 format = """
 [\u2B22 ](fg:#42E66C bg:transparent)\
 $directory\
@@ -105,19 +107,20 @@ style = "bg:transparent"
 format = '[[$symbol $branch ](fg:#43CCEA bg:transparent)]($style)'
 
 [git_status]
-style = "bg:transparent"
+style = "(fg:#43CCEA bg:transparent)"
 stashed = "\uf692 (${count}) "
 ahead = "⇡${count} "
 behind = "⇣${count} "
 diverged = "⇕${ahead_count} ${behind_count} "
-conflicted = "=${count} "
-modified = "[\uf044 ?(${count})](fg:#43CCEA bg:transparent) "
-untracked = "[~${count}](fg:#43CCEA bg:transparent)"
-deleted = "[-${count}](fg:#43CCEA bg:transparent) "
+conflicted = "x${count} "
+modified = "\uf044 ?(${count}) "
+untracked = "~${count}] "
+deleted = "-${count} "
 renamed = "»${count} "
-staged = "[\u26a1 ${count}](fg:#43CCEA bg:transparent) "
+typechanged = "==${count}"
+staged = "\uf046 ${count} "
 up_to_date = ""
-format = '[[($all_status$ahead_behind )](fg:##43CCEA bg:transparent)]($style)'
+format = '[[($all_status$ahead_behind )](fg:#43CCEA bg:transparent)]($style)'
 
 #=== cloud ===
 [azure]
