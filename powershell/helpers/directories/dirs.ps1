@@ -68,8 +68,8 @@ function s_sql { s_website; cd "Sahiv.Midtier2\Bat2\" }
 function s_web { s_website; cd "SahivV3_Angular\ClientApp\" }
 
 ## ATRAX
-function atrax { r_git; cd "rysis-atrax2\" }
-function a_api { atrax; "Operational System\Atrax.Api\" }
+function atrax { r_git; cd "rysis\rysis-atrax2\" }
+function a_api { atrax; cd "Operational System\Atrax.Api\" }
 function a_web { atrax; cd "Operational System\Atrax.Webapp\ClientApp\" }
 function a_sql { atrax; cd "Operational System\Atrax.Midtier\SqlProxyClassGen\" }
 
