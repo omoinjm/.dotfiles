@@ -22,7 +22,7 @@ add_newline = false
 
 continuation_prompt = '[> ](fg:bright-black bg:transparent) '
 
-command_timeout = 300
+command_timeout = 1000
 
 format = """
 [\u2B22 ](fg:#42E66C bg:transparent)\
