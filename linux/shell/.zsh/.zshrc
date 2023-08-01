@@ -8,4 +8,5 @@
 eval "$(starship init zsh)"
 
 # Load Direnv
+# https://direnv.net/
 eval "$(direnv hook zsh)"
