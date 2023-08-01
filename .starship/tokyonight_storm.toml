@@ -21,10 +21,12 @@ add_newline = false
 
 continuation_prompt = '[➜ ](fg:#7aa2f7 bg:transparent) '
 
+command_timeout = 5000
+
 format = """
 [➜ ](fg:#7aa2f7 bg:transparent)\
 $directory\
-[ \u26a1](fg:#7dcfff bg:transparent)\
+[ \u26a1 ](fg:#7dcfff bg:transparent)\
 $git_branch\
 [\u2630 ](fg:#7dcfff bg:transparent)\
 $git_status\

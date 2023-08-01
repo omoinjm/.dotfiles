@@ -71,3 +71,6 @@ Pods/
 
 # Karabiner
 .config/karabiner/automatic_backups
+
+# Personal
+env
