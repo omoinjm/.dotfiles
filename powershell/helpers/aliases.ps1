@@ -10,6 +10,8 @@ $env:GIT_SSH = "C:\Windows\system32\OpenSSH\ssh.exe"
 Set-Alias -Name curl -Value "C:\Program Files\Git\mingw64\bin\curl.exe" -Option AllScope
 Set-Alias -Name iis -Value "C:\Program Files\IIS Express\iisexpress.exe" -Option AllScope
 Set-Alias -Name openvpn -Value "C:\Program Files\OpenVPN\bin\openvpn.exe" -Option AllScope
+# Set-Alias -Name pass_sh -Value "D:\msys64\usr\bin\pass"
+# Set-Alias -Name gpg -Value "D:\msys64\usr\bin\gpg.exe"
 
 # Utilities
 
