@@ -60,7 +60,7 @@ function d_telematics { optix; cd "driverisk-telematics\" }
 function d_mail { optix; cd "driverisk-mail" }
 
 ## SAHCS
-function sahiv { r_git; cd "rysis-sahiv\" }
+function sahiv { r_git; cd "rysis\rysis-sahiv\" }
 function s_website { sahiv; cd "Website\" }
 function s_mvc { s_website; cd "SahivV2.MVC\" }
 function s_api { s_website; cd "SahivV3_Api\" }
