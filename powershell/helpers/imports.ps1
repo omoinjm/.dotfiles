@@ -23,6 +23,3 @@ Import-Module -Name "$path\directories\p_dirs.ps1"
 
 # Function commands
 Import-Module -Name "$path\aliases.ps1"
-
-# Environment variables
-Import-Module -Name "$path\..\work\secrets.ps1"
