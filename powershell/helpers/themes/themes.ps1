@@ -21,7 +21,7 @@ Set-PSReadLineKeyHandler -Key 'Ctrl+r' -ScriptBlock { fzf }
 
 # STARSHIP THEME
 $env:STARSHIP_DISTRO = "者 omoi "
-$env:STARSHIP_CONFIG = "$env:dotfiles\.starship\json.toml"
+$env:STARSHIP_CONFIG = "$env:dotfiles\.starship\tokyonight_storm.toml"
 
 function Invoke-Starship-TransientFunction {
     &starship module character

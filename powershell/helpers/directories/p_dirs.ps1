@@ -8,4 +8,6 @@ function conf { cd "$env:dotfiles" }
 function o_git { omoi; cd "git" }
 function o_site { o_git; cd "portfolio\" }
 
+# tshomo
+function t_git { cd "D:\tshomo\git\" }
 
