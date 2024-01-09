@@ -1,5 +1,7 @@
 # personal repos and directories
 
+# desktop
+function dtop { cd "~/OneDrive/Desktop/" }
 # folders and config
 function omoi { cd "$env:maindir\omoi" }
 function conf { cd "$env:dotfiles" }
