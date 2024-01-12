@@ -1,7 +1,6 @@
 # Alias
 Set-Alias ll ls
 Set-Alias g git
-Set-Alias vim nvim
 Set-Alias -Name idea -Value "C:\Program Files\JetBrains\IntelliJ IDEA 2023.2.1\bin\idea64.exe" 
 Set-Alias grep findstr
 Set-Alias -Name vim nvim
