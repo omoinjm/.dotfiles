@@ -2,6 +2,10 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
+local discipline = require("omoi.discipline")
+
+-- discipline.cowboy()
+
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
@@ -17,6 +21,9 @@ keymap.set("n", "dw", 'vb"_d')
 -- Select all
 keymap.set("n", "<C-a>", "gg<S-v>G")
 
+-- Copy to clipboard
+keymap.set("n", "<C-x>", '"+y')
+
 -- Save with root permission (not working for now)
 --vim.api.nvim_create_user_command('W', 'w !sudo tee > /dev/null %', {})
 
@@ -29,10 +36,10 @@ keymap.set("n", "<C-m>", "<C-i>", opts)
 
 -- New tab
 keymap.set("n", "te", ":tabedit")
-keymap.set("n", "<tab>", ":tabnext<Return>", opts)
-keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
-keymap.set("n", "<C-1>", "[b", opts)
-keymap.set("n", "<C-2>", "]b", opts)
+-- keymap.set("n", "<C-tab>", ":tabnext<Return>", opts)
+-- keymap.set("n", "<C-s-tab>", ":tabprev<Return>", opts)
+keymap.set("n", "<s-tab>", ":bprevious<Return>", opts)
+keymap.set("n", "<tab>", ":bnext<Return>", opts)
 
 -- Split window
 keymap.set("n", "ss", ":split<Return>", opts)
@@ -53,3 +60,11 @@ keymap.set("n", "<C-w><down>", "<C-w>-")
 keymap.set("n", "<C-j>", function()
   vim.diagnostic.goto_next()
 end, opts)
+
+keymap.set("n", "<leader>r", function()
+  require("omoi.hsl").replaceHexWithHSL()
+end)
+
+keymap.set("n", "<leader>i", function()
+  require("omoi.lsp").toggleInlayHints()
+end)
