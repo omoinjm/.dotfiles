@@ -49,11 +49,11 @@ return {
   },
 
   {
-    enabled = true,
+    -- enabled = true,
     "telescope.nvim",
     dependencies = {
       {
-        enabled = true,
+        -- enabled = true,
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "make",
       },
@@ -210,7 +210,7 @@ return {
       telescope.setup(opts)
       require("telescope").load_extension("fzf")
       require("telescope").load_extension("file_browser")
-      require("telescope").load_extension("telescope-fzf-native")
+      -- require("telescope").load_extension("telescope-fzf-native")
     end,
   },
 }

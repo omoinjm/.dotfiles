@@ -20,6 +20,10 @@ return {
         "scss",
         "sql",
         "svelte",
+        "python",
+        "bash",
+        "dockerfile",
+        "yaml",
       },
 
       -- matchup = {
