@@ -15,6 +15,7 @@ return {
         "clangd",
         "clang-format",
         "codelldb",
+        "pyright",
       })
     end,
   },
@@ -28,6 +29,8 @@ return {
       servers = {
 
         clangd = {},
+
+        pyright = {},
 
         cssls = {},
         tailwindcss = {
@@ -146,6 +149,12 @@ return {
           local capabilities = base.capabilities
 
           local lspconfig = require("lspconfig")
+
+          lspconfig.pyright.setup({
+            on_attach = on_attach,
+            capabilities = capabilities,
+            filetypes = { "python" },
+          })
 
           lspconfig.clangd.setup({
             on_attach = function(client, bufnr)
