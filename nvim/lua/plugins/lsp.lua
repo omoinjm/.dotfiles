@@ -14,6 +14,7 @@ return {
         "css-lsp",
         "clangd",
         "clang-format",
+        "codelldb",
       })
     end,
   },
@@ -25,13 +26,9 @@ return {
       inlay_hints = { enabled = false },
       ---@type lspconfig.options
       servers = {
-        -- clangd = {
-        --   on_attach = function(client, bufnr)
-        --     client.server_capabilities.signatureHelpProvider = false
-        --     on_attach(client, bufnr)
-        --   end,
-        --   capabilitiesclient = capabilities,
-        -- },
+
+        clangd = {},
+
         cssls = {},
         tailwindcss = {
           root_dir = function(...)
@@ -142,7 +139,29 @@ return {
           },
         },
       },
-      setup = {},
+      setup = {
+        clangd = function(_, _)
+          local base = require("omoi.lsp")
+          local on_attach = base.on_attach
+          local capabilities = base.capabilities
+
+          local lspconfig = require("lspconfig")
+
+          lspconfig.clangd.setup({
+            on_attach = function(client, bufnr)
+              -- client.server_capabilities.signatureHelpProvider = false
+              on_attach(client, bufnr)
+            end,
+            capabilities = capabilities,
+            cmd = {
+              "clangd",
+              "--offset-encoding=utf-16",
+            },
+          })
+
+          return lspconfig
+        end,
+      },
     },
   },
 }
