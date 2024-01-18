@@ -61,9 +61,9 @@ keymap.set("n", "<C-j>", function()
   vim.diagnostic.goto_next()
 end, opts)
 
-keymap.set("n", "<leader>r", function()
-  require("omoi.hsl").replaceHexWithHSL()
-end)
+-- keymap.set("n", "<leader>r", function()
+--   require("omoi.hsl").replaceHexWithHSL()
+-- end)
 
 keymap.set("n", "<leader>i", function()
   require("omoi.lsp").toggleInlayHints()
