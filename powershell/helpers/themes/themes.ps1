@@ -9,12 +9,14 @@ function posh {
     oh-my-posh --init --shell pwsh --config $PROMPT_CONFIG | Invoke-Expression
 }
 
-# PSReadLine
-Set-PSReadLineOption -EditMode Emacs
-Set-PSReadLineOption -BellStyle None
-Set-PSReadLineOption -PredictionSource History
-Set-PSReadLineOption -PredictionViewStyle ListView 
-Set-PSReadLineKeyHandler -Chord 'Ctrl+d' -Function DeleteChar
+if ($PSVersionTable.PSVersion.Major -gt 7) {
+  # PSReadLine
+  Set-PSReadLineOption -EditMode Emacs
+  Set-PSReadLineOption -BellStyle None
+  Set-PSReadLineOption -PredictionSource History
+  Set-PSReadLineOption -PredictionViewStyle ListView 
+  Set-PSReadLineKeyHandler -Chord 'Ctrl+d' -Function DeleteChar
+}
 
 # Fzf
 Set-PSReadLineKeyHandler -Key 'Ctrl+r' -ScriptBlock { fzf }

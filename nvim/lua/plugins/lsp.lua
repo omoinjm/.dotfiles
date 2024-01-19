@@ -16,6 +16,9 @@ return {
         "clang-format",
         "codelldb",
         "pyright",
+        "debugpy",
+        "black",
+        "ruff",
       })
     end,
   },
@@ -28,9 +31,30 @@ return {
       ---@type lspconfig.options
       servers = {
 
+        -- Ensure mason installs the server
+        omnisharp = {},
+
         clangd = {},
 
         pyright = {},
+
+        ruff_lsp = {
+          keys = {
+            {
+              "<leader>co",
+              function()
+                vim.lsp.buf.code_action({
+                  apply = true,
+                  context = {
+                    only = { "source.organizeImports" },
+                    diagnostics = {},
+                  },
+                })
+              end,
+              desc = "Organize Imports",
+            },
+          },
+        },
 
         cssls = {},
         tailwindcss = {
@@ -169,6 +193,33 @@ return {
           })
 
           return lspconfig
+        end,
+
+        ruff_lsp = function()
+          require("lazyvim.util").lsp.on_attach(function(client, _)
+            if client.name == "ruff_lsp" then
+              -- Disable hover in favor of Pyright
+              client.server_capabilities.hoverProvider = false
+            end
+          end)
+        end,
+
+        omnisharp = function(_, _)
+          require("lazyvim.util").lsp.on_attach(function(client, _)
+            if client.name == "omnisharp" then
+              ---@type string[]
+              local tokenModifiers = client.server_capabilities.semanticTokensProvider.legend.tokenModifiers
+              for i, v in ipairs(tokenModifiers) do
+                tokenModifiers[i] = v:gsub(" ", "_")
+              end
+              ---@type string[]
+              local tokenTypes = client.server_capabilities.semanticTokensProvider.legend.tokenTypes
+              for i, v in ipairs(tokenTypes) do
+                tokenTypes[i] = v:gsub(" ", "_")
+              end
+            end
+          end)
+          return false
         end,
       },
     },

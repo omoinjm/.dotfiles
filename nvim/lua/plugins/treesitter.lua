@@ -24,6 +24,11 @@ return {
         "bash",
         "dockerfile",
         "yaml",
+        "python",
+        "ninja",
+        "rst",
+        "toml",
+        "c_sharp",
       },
 
       -- matchup = {
