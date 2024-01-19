@@ -1,15 +1,19 @@
-# Prompt
-# oh-my-posh init pwsh | Invoke-Expression
+# Icons
+Import-Module -Name Terminal-Icons
+
+# Get script directory
+ function Get-ScriptDirectory { Split-Path $MyInvocation.ScriptName }
 
 # Load prompt config
-function Get-ScriptDirectory { Split-Path $MyInvocation.ScriptName }
-$PROMPT_CONFIG = Join-Path (Get-ScriptDirectory) 'config\json.omp.json'
-
 function posh {
+    # Join path to the prompt config
+    $PROMPT_CONFIG = Join-Path (Get-ScriptDirectory) 'config\json.omp.json'    
+    
+    # Initialize oh-my-posh with the specified config
     oh-my-posh --init --shell pwsh --config $PROMPT_CONFIG | Invoke-Expression
 }
 
-if ($PSVersionTable.PSVersion.Major -gt 7) {
+if ($PSVersionTable.PSVersion.Major -ge 7) {
   # PSReadLine
   Set-PSReadLineOption -EditMode Emacs
   Set-PSReadLineOption -BellStyle None
@@ -28,7 +32,7 @@ $env:STARSHIP_CONFIG = "$env:dotfiles\.starship\tokyonight_storm.toml"
 function Invoke-Starship-TransientFunction {
     &starship module character
 }
-  
+
 Invoke-Expression (&starship init powershell)
-  
+
 Enable-TransientPrompt

@@ -5,4 +5,7 @@ $vcvarsallPath = "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Aux
 $architecture = "x64"
 
 # Run vcvarsall.bat and then use the 'cl' command
-& $vcvarsallPath $architecture
+function vcvarsall {
+ & $vcvarsallPath $architecture
+}
+
