@@ -47,18 +47,24 @@ return {
       },
     },
   },
-
+  { "junegunn/fzf.vim", dependencies = { "junegunn/fzf" } },
   {
-    -- enabled = true,
+    enabled = true,
     "telescope.nvim",
     dependencies = {
+      { "nvim-telescope/telescope-dap.nvim" },
       {
-        -- enabled = true,
+        enabled = true,
         "nvim-telescope/telescope-fzf-native.nvim",
-        build = "make",
+        build = "bash -c 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'",
+        config = function()
+          require("telescope").load_extension("fzf")
+        end,
       },
       "nvim-telescope/telescope-file-browser.nvim",
     },
+    { "nvim-telescope/telescope-project.nvim" },
+    { "debugloop/telescope-undo.nvim" },
     keys = {
       {
         "<leader>fP",
@@ -210,7 +216,10 @@ return {
       telescope.setup(opts)
       require("telescope").load_extension("fzf")
       require("telescope").load_extension("file_browser")
-      -- require("telescope").load_extension("telescope-fzf-native")
+      require("telescope").load_extension("dap")
+      require("telescope").load_extension("project")
+      require("telescope").load_extension("undo")
+      require("telescope").load_extension("telescope-fzf-native")
     end,
   },
 }
