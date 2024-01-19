@@ -1,15 +1,12 @@
 # Nuget package imports
-Import-Module NuGet
-Import-Module AzureAD
-Import-Module PackageManagement
+# Import-Module NuGet
+# Import-Module AzureAD
+# Import-Module PackageManagement
 # Import-Module Microsoft.Graph
-Import-Module Microsoft.Graph.Users
-Import-Module Microsoft.Graph.Authentication 
+# Import-Module Microsoft.Graph.Users
+# Import-Module Microsoft.Graph.Authentication 
 
 Set-Variable -Name path -Value "$env:dotfiles\powershell\helpers" -Option Constant
-
-# Icons
-Import-Module -Name Terminal-Icons
 
 # Scripts and programs
 Import-Module -Name "$path\scripts\exports.ps1"
