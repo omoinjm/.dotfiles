@@ -74,3 +74,6 @@ Pods/
 
 # Personal
 env
+
+# junk
+*.log
