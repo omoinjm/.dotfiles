@@ -112,7 +112,7 @@ return {
       local colors = require("solarized-osaka.colors").setup()
       require("incline").setup({
         highlight = {
-          groups = {
+        groups = {
             InclineNormal = { guibg = colors.magenta500, guifg = colors.base04 },
             InclineNormalNC = { guifg = colors.violet500, guibg = colors.base03 },
           },
@@ -150,18 +150,25 @@ return {
   {
     "nvimdev/dashboard-nvim",
     event = "VimEnter",
-    opts = function(_, opts)
+    config = function()
       local logo = [[
-        ██████╗ ███████╗██╗   ██╗ █████╗ ███████╗██╗     ██╗███████╗███████╗
-        ██╔══██╗██╔════╝██║   ██║██╔══██╗██╔════╝██║     ██║██╔════╝██╔════╝
-        ██║  ██║█████╗  ██║   ██║███████║███████╗██║     ██║█████╗  █████╗  
-        ██║  ██║██╔══╝  ╚██╗ ██╔╝██╔══██║╚════██║██║     ██║██╔══╝  ██╔══╝  
-        ██████╔╝███████╗ ╚████╔╝ ██║  ██║███████║███████╗██║██║     ███████╗
-        ╚═════╝ ╚══════╝  ╚═══╝  ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝╚═╝     ╚══════╝
+         ██████╗ ███╗   ███╗ ██████╗ ██╗███╗   ██╗     ██╗███╗   ███╗
+        ██╔═══██╗████╗ ████║██╔═══██╗██║████╗  ██║     ██║████╗ ████║
+        ██║   ██║██╔████╔██║██║   ██║██║██╔██╗ ██║     ██║██╔████╔██║
+        ██║   ██║██║╚██╔╝██║██║   ██║██║██║╚██╗██║██   ██║██║╚██╔╝██║
+        ╚██████╔╝██║ ╚═╝ ██║╚██████╔╝██║██║ ╚████║╚█████╔╝██║ ╚═╝ ██║
+         ╚═════╝ ╚═╝     ╚═╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚════╝ ╚═╝     ╚═╝
       ]]
 
       logo = string.rep("\n", 8) .. logo .. "\n\n"
-      opts.config.header = vim.split(logo, "\n")
+
+      require('dashboard').setup {
+        -- config
+        config = {
+          header = vim.split(logo, "\n")
+        }
+      }
     end,
+    dependencies = { {'nvim-tree/nvim-web-devicons'}}
   },
 }
