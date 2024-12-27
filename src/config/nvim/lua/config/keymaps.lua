@@ -2,8 +2,8 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
-local discipline = require("omoi.discipline")
 
+-- local discipline = require("omoi.discipline")
 -- discipline.cowboy()
 
 local keymap = vim.keymap
@@ -33,6 +33,7 @@ keymap.set("n", "<Leader>O", "O<Esc>^Da", opts)
 
 -- Jumplist
 keymap.set("n", "<C-m>", "<C-i>", opts)
+
 
 -- New tab
 keymap.set("n", "te", ":tabedit")
@@ -68,3 +69,4 @@ end, opts)
 keymap.set("n", "<leader>i", function()
   require("omoi.lsp").toggleInlayHints()
 end)
+
