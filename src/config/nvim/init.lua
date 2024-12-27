@@ -9,3 +9,4 @@ end
 vim.print = _G.dd
 
 require("config.lazy")
+
