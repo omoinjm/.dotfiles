@@ -7,8 +7,9 @@ Import-Module -Name Terminal-Icons
 # Load prompt config
 function posh {
     # Join path to the prompt config
-    $PROMPT_CONFIG = Join-Path (Get-ScriptDirectory) 'config\json.omp.json'    
-    
+    # $PROMPT_CONFIG = Join-Path (Get-ScriptDirectory) 'config\json.omp.json'
+    $PROMPT_CONFIG = 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/json.omp.json'
+
     # Initialize oh-my-posh with the specified config
     oh-my-posh --init --shell pwsh --config $PROMPT_CONFIG | Invoke-Expression
 }
@@ -27,7 +28,8 @@ Set-PSReadLineKeyHandler -Key 'Ctrl+r' -ScriptBlock { fzf }
 
 # STARSHIP THEME
 $env:STARSHIP_DISTRO = "者 omoi "
-$env:STARSHIP_CONFIG = "$env:dotfiles\.starship\tokyonight_storm.toml"
+$env:STARSHIP_CONFIG = "$env:USERPROFILE\.config\starship\json.toml"
+
 
 function Invoke-Starship-TransientFunction {
     &starship module character
