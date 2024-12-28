@@ -30,6 +30,9 @@ set -gx PATH bin $PATH
 set -gx PATH ~/bin $PATH
 set -gx PATH ~/.local/bin $PATH
 
+set -x SSH_AUTH_SOCK /tmp/ssh-REDACTED/agent.0
+set -x SSH_AGENT_PID 106489
+
 # NodeJS
 set -gx PATH node_modules/.bin $PATH
 
@@ -54,5 +57,5 @@ end
 # oh-my-posh init fish | source
 
 # With Theme
-oh-my-posh init fish --config /home/omoinjm/dev/github/config/dotfiles/src/config/powershell/helpers/themes/config/tokyonight_storm.omp.json | source
+oh-my-posh init fish --config /home/omoinjm/dev/github/config/dotfiles/src/config/powershell/helpers/themes/config/bubblesextra.omp.json | source
 
