@@ -57,5 +57,5 @@ end
 # oh-my-posh init fish | source
 
 # With Theme
-oh-my-posh init fish --config /home/omoinjm/dev/github/config/dotfiles/src/config/powershell/helpers/themes/config/bubblesextra.omp.json | source
+oh-my-posh init fish --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/bubblesextra.omp.json' | source
 
