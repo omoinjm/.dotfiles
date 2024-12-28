@@ -1,6 +1,6 @@
 # Tips and Tricks
 
-### Package manager settings
+## Package manager settings
 
 [Change Scoop install directory](https://github.com/ScoopInstaller/Scoop/issues/249)
 

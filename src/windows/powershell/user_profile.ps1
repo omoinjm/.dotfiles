@@ -2,4 +2,4 @@
 [console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
 
 # Imports
-. $env:dotfiles\powershell\helpers\imports.ps1
+. $env:USERPROFILE\.config\powershell\helpers\imports.ps1
