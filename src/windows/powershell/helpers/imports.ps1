@@ -7,7 +7,7 @@
 # Import-Module Microsoft.Graph.Authentication 
 # Import-Module Az -Force -Verbose
 
-Set-Variable -Name path -Value "$env:dotfiles\powershell\helpers" -Option Constant
+Set-Variable -Name path -Value "$env:USERPROFILE\.config\powershell\helpers" -Option Constant
 
 # Scripts and programs
 Import-Module -Name "$path\scripts\exports.ps1"
