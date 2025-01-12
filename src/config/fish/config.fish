@@ -23,7 +23,6 @@ command -v lsd > /dev/null && alias ls='lsd --group-dirs first' && \
 command -v colorls > /dev/null && alias ls='colorls --sd --gs' && \
 	alias tree='colorls --tree'
 
-
 set -gx EDITOR nvim
 
 set -gx PATH bin $PATH
@@ -56,4 +55,3 @@ end
 
 # Theme
 oh-my-posh init fish --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/bubblesextra.omp.json' | source
-
