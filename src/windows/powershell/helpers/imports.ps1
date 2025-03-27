@@ -6,6 +6,7 @@
 # Import-Module Microsoft.Graph.Users
 # Import-Module Microsoft.Graph.Authentication 
 # Import-Module Az -Force -Verbose
+Import-Module Az.Storage
 
 Set-Variable -Name path -Value "$env:USERPROFILE\.config\powershell\helpers" -Option Constant
 
