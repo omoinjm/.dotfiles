@@ -63,3 +63,6 @@ if not string match -q -- $PNPM_HOME $PATH
   set -gx PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
+
+# Nebius CLI
+set -Ux PATH $PATH /home/omoinjm/.nebius/bin
