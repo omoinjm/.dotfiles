@@ -65,4 +65,4 @@ end
 # pnpm end
 
 # Nebius CLI
-set -Ux PATH $PATH /home/omoinjm/.nebius/bin
+set -Ux PATH $PATH "/home/omoinjm/.nebius/bin"
