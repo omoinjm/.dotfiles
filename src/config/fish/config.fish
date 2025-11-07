@@ -18,10 +18,8 @@ alias g git
 command -qv nvim && alias vim nvim
 
 # alias l='ls -F'
-command -v lsd > /dev/null && alias ls='lsd --group-dirs first' && \
-	alias tree='lsd --tree'
-command -v colorls > /dev/null && alias ls='colorls --sd --gs' && \
-	alias tree='colorls --tree'
+command -v lsd >/dev/null && alias ls='lsd --group-dirs first' && alias tree='lsd --tree'
+command -v colorls >/dev/null && alias ls='colorls --sd --gs' && alias tree='colorls --tree'
 
 set -gx EDITOR nvim
 
@@ -60,9 +58,6 @@ oh-my-posh init fish --config 'https://raw.githubusercontent.com/JanDeDobbeleer/
 # pnpm
 set -gx PNPM_HOME "/home/omoinjm/.local/share/pnpm"
 if not string match -q -- $PNPM_HOME $PATH
-  set -gx PATH "$PNPM_HOME" $PATH
+    set -gx PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
-
-# Nebius CLI
-set -Ux PATH $PATH "/home/omoinjm/.nebius/bin"
