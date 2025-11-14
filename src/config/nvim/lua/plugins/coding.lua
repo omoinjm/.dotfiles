@@ -41,7 +41,8 @@ return {
 
   -- Go forward/backward with square brackets
   {
-    "echasnovski/mini.bracketed",
+    -- ERRORS "echasnovski/mini.bracketed",
+    "nvim-mini/mini.bracketed",
     event = "BufReadPost",
     config = function()
       local bracketed = require("mini.bracketed")
@@ -113,4 +114,3 @@ return {
     keys = { { "<leader>cv", "<cmd>:VenvSelect<cr>", desc = "Select VirtualEnv" } },
   },
 }
-
