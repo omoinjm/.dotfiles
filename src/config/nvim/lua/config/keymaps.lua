@@ -2,14 +2,25 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
-
 -- local discipline = require("omoi.discipline")
 -- discipline.cowboy()
 
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
+-- Do things without affecting the registers
 keymap.set("n", "x", '"_x')
+keymap.set("n", "<Leader>p", '"0p')
+keymap.set("n", "<Leader>P", '"0P')
+keymap.set("v", "<Leader>p", '"0p')
+keymap.set("n", "<Leader>c", '"_c')
+keymap.set("n", "<Leader>C", '"_C')
+keymap.set("v", "<Leader>c", '"_c')
+keymap.set("v", "<Leader>C", '"_C')
+keymap.set("n", "<Leader>d", '"_d')
+keymap.set("n", "<Leader>D", '"_D')
+keymap.set("v", "<Leader>d", '"_d')
+keymap.set("v", "<Leader>D", '"_D')
 
 -- Increment/decrement
 keymap.set("n", "+", "<C-a>")
@@ -21,9 +32,6 @@ keymap.set("n", "dw", 'vb"_d')
 -- Select all
 keymap.set("n", "<C-a>", "gg<S-v>G")
 
--- Copy to clipboard
-keymap.set("n", "<C-x>", '"+y')
-
 -- Save with root permission (not working for now)
 --vim.api.nvim_create_user_command('W', 'w !sudo tee > /dev/null %', {})
 
@@ -34,14 +42,10 @@ keymap.set("n", "<Leader>O", "O<Esc>^Da", opts)
 -- Jumplist
 keymap.set("n", "<C-m>", "<C-i>", opts)
 
-
 -- New tab
 keymap.set("n", "te", ":tabedit")
--- keymap.set("n", "<C-tab>", ":tabnext<Return>", opts)
--- keymap.set("n", "<C-s-tab>", ":tabprev<Return>", opts)
-keymap.set("n", "<s-tab>", ":bprevious<Return>", opts)
-keymap.set("n", "<tab>", ":bnext<Return>", opts)
-
+keymap.set("n", "<tab>", ":tabnext<Return>", opts)
+keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
 -- Split window
 keymap.set("n", "ss", ":split<Return>", opts)
 keymap.set("n", "sv", ":vsplit<Return>", opts)
@@ -62,11 +66,14 @@ keymap.set("n", "<C-j>", function()
   vim.diagnostic.goto_next()
 end, opts)
 
--- keymap.set("n", "<leader>r", function()
---   require("omoi.hsl").replaceHexWithHSL()
--- end)
-
-keymap.set("n", "<leader>i", function()
-  require("omoi.lsp").toggleInlayHints()
+keymap.set("n", "<leader>r", function()
+  require("craftzdog.hsl").replaceHexWithHSL()
 end)
 
+keymap.set("n", "<leader>i", function()
+  require("craftzdog.lsp").toggleInlayHints()
+end)
+
+vim.api.nvim_create_user_command("ToggleAutoformat", function()
+  require("craftzdog.lsp").toggleAutoformat()
+end, {})

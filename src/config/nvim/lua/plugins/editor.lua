@@ -1,6 +1,6 @@
 return {
   {
-    enabled = true,
+    enabled = false,
     "folke/flash.nvim",
     ---@type Flash.Config
     opts = {
@@ -12,28 +12,23 @@ return {
       },
     },
   },
+
   {
-    -- ERRORS "echasnovski/mini.hipatterns",
-    "nvim-mini/mini.hipatterns",
+    "brenoprata10/nvim-highlight-colors",
     event = "BufReadPre",
     opts = {
-      highlighters = {
-        hsl_color = {
-          pattern = "hsl%(%d+,? %d+,? %d+%)",
-          group = function(_, match)
-            local utils = require("solarized-osaka.hsl")
-            --- @type string, string, string
-            local nh, ns, nl = match:match("hsl%((%d+),? (%d+),? (%d+)%)")
-            --- @type number?, number?, number?
-            local h, s, l = tonumber(nh), tonumber(ns), tonumber(nl)
-            --- @type string
-            local hex_color = utils.hslToHex(h, s, l)
-            return MiniHipatterns.compute_hex_color_group(hex_color, "bg")
-          end,
-        },
-      },
+      render = "background",
+      enable_hex = true,
+      enable_short_hex = true,
+      enable_rgb = true,
+      enable_hsl = true,
+      enable_hsl_without_function = true,
+      enable_ansi = true,
+      enable_var_usage = true,
+      enable_tailwind = true,
     },
   },
+
   {
     "dinhhuy258/git.nvim",
     event = "BufReadPre",
@@ -46,25 +41,16 @@ return {
       },
     },
   },
-  { "junegunn/fzf.vim", dependencies = { "junegunn/fzf" } },
+
   {
-    enabled = true,
     "nvim-telescope/telescope.nvim",
-    -- "telescope.nvim",
     dependencies = {
-      { "nvim-telescope/telescope-dap.nvim" },
       {
-        enabled = true,
         "nvim-telescope/telescope-fzf-native.nvim",
-        build = "bash -c 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'",
-        config = function()
-          require("telescope").load_extension("fzf")
-        end,
+        build = "make",
       },
       "nvim-telescope/telescope-file-browser.nvim",
     },
-    { "nvim-telescope/telescope-project.nvim" },
-    { "debugloop/telescope-undo.nvim" },
     keys = {
       {
         "<leader>fP",
@@ -97,6 +83,14 @@ return {
         desc = "Search for a string in your current working directory and get results live as you type, respects .gitignore",
       },
       {
+        "\\\\",
+        function()
+          local builtin = require("telescope.builtin")
+          builtin.buffers()
+        end,
+        desc = "Lists open buffers",
+      },
+      {
         ";t",
         function()
           local builtin = require("telescope.builtin")
@@ -127,6 +121,14 @@ return {
           builtin.treesitter()
         end,
         desc = "Lists Function names, variables, from Treesitter",
+      },
+      {
+        ";c",
+        function()
+          local builtin = require("telescope.builtin")
+          builtin.lsp_incoming_calls()
+        end,
+        desc = "Lists LSP incoming calls for word under the cursor",
       },
       {
         "sf",
@@ -166,7 +168,15 @@ return {
           n = {},
         },
       })
-
+      opts.pickers = {
+        diagnostics = {
+          theme = "ivy",
+          initial_mode = "normal",
+          layout_config = {
+            preview_cutoff = 9999,
+          },
+        },
+      }
       opts.extensions = {
         file_browser = {
           theme = "dropdown",
@@ -197,14 +207,46 @@ return {
           },
         },
       }
-
       telescope.setup(opts)
       require("telescope").load_extension("fzf")
       require("telescope").load_extension("file_browser")
-      require("telescope").load_extension("dap")
-      require("telescope").load_extension("project")
-      require("telescope").load_extension("undo")
-      require("telescope").load_extension("telescope-fzf-native")
     end,
+  },
+
+  {
+    "kazhala/close-buffers.nvim",
+    event = "VeryLazy",
+    keys = {
+      {
+        "<leader>th",
+        function()
+          require("close_buffers").delete({ type = "hidden" })
+        end,
+        "Close Hidden Buffers",
+      },
+      {
+        "<leader>tu",
+        function()
+          require("close_buffers").delete({ type = "nameless" })
+        end,
+        "Close Nameless Buffers",
+      },
+    },
+  },
+
+  {
+    "saghen/blink.cmp",
+    opts = {
+      completion = {
+        menu = {
+          winblend = vim.o.pumblend,
+        },
+      },
+      signature = {
+        window = {
+          winblend = vim.o.pumblend,
+        },
+      },
+    },
   },
 }
