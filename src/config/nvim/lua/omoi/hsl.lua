@@ -28,7 +28,6 @@ end
  * @param   Number  b       The blue color value
  * @return  Array           The HSL representation
 ]]
-
 function M.rgbToHsl(r, g, b)
   local max, min = math.max(r, g, b), math.min(r, g, b)
   local h = 0
@@ -37,7 +36,7 @@ function M.rgbToHsl(r, g, b)
 
   l = (max + min) / 2
 
-if max == min then
+  if max == min then
     h, s = 0, 0 -- achromatic
   else
     local d = max - min
@@ -73,11 +72,10 @@ end
  * @param   Number  l       The lightness
  * @return  Array           The RGB representation
 ]]
-
 function M.hslToRgb(h, s, l)
   local r, g, b
 
-if s == 0 then
+  if s == 0 then
     r, g, b = l, l, l -- achromatic
   else
     function hue2rgb(p, q, t)
@@ -130,7 +128,6 @@ end
  * @param   Number  l       The lightness
  * @return  String           The hex representation
 ]]
-
 function M.hslToHex(h, s, l)
   local r, g, b = M.hslToRgb(h / 360, s / 100, l / 100)
 
@@ -150,7 +147,7 @@ function M.replaceHexWithHSL()
     line_content = line_content:gsub(hex, hsl)
   end
 
- -- Set the line content back
+  -- Set the line content back
   vim.api.nvim_buf_set_lines(0, line_number - 1, line_number, false, { line_content })
 end
 
