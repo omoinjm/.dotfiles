@@ -62,7 +62,8 @@ return {
 
   -- animations
   {
-    "echasnovski/mini.animate",
+    -- ERRORS "echasnovski/mini.animate",
+    "nvim-mini/mini.animate",
     event = "VeryLazy",
     opts = function(_, opts)
       opts.scroll = {
@@ -112,7 +113,7 @@ return {
       local colors = require("solarized-osaka.colors").setup()
       require("incline").setup({
         highlight = {
-        groups = {
+          groups = {
             InclineNormal = { guibg = colors.magenta500, guifg = colors.base04 },
             InclineNormalNC = { guifg = colors.violet500, guibg = colors.base03 },
           },
@@ -162,13 +163,13 @@ return {
 
       logo = string.rep("\n", 8) .. logo .. "\n\n"
 
-      require('dashboard').setup {
+      require("dashboard").setup({
         -- config
         config = {
-          header = vim.split(logo, "\n")
-        }
-      }
+          header = vim.split(logo, "\n"),
+        },
+      })
     end,
-    dependencies = { {'nvim-tree/nvim-web-devicons'}}
+    dependencies = { { "nvim-tree/nvim-web-devicons" } },
   },
 }

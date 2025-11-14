@@ -13,7 +13,8 @@ return {
     },
   },
   {
-    "echasnovski/mini.hipatterns",
+    -- ERRORS "echasnovski/mini.hipatterns",
+    "nvim-mini/mini.hipatterns",
     event = "BufReadPre",
     opts = {
       highlighters = {
@@ -62,9 +63,9 @@ return {
       },
       "nvim-telescope/telescope-file-browser.nvim",
     },
-     { "nvim-telescope/telescope-project.nvim" },
+    { "nvim-telescope/telescope-project.nvim" },
     { "debugloop/telescope-undo.nvim" },
-     keys = {
+    keys = {
       {
         "<leader>fP",
         function()
@@ -85,7 +86,7 @@ return {
         end,
         desc = "Lists files in your current working directory, respects .gitignore",
       },
-       {
+      {
         ";r",
         function()
           local builtin = require("telescope.builtin")
@@ -95,7 +96,7 @@ return {
         end,
         desc = "Search for a string in your current working directory and get results live as you type, respects .gitignore",
       },
-       {
+      {
         ";t",
         function()
           local builtin = require("telescope.builtin")
@@ -103,7 +104,7 @@ return {
         end,
         desc = "Lists available help tags and opens a new window with the relevant help info on <cr>",
       },
-       {
+      {
         ";;",
         function()
           local builtin = require("telescope.builtin")
@@ -111,7 +112,7 @@ return {
         end,
         desc = "Resume the previous telescope picker",
       },
-       {
+      {
         ";e",
         function()
           local builtin = require("telescope.builtin")
@@ -148,14 +149,14 @@ return {
           })
         end,
         desc = "Open File Browser with the path of the current buffer",
-      },      
+      },
     },
     config = function(_, opts)
       local telescope = require("telescope")
       local actions = require("telescope.actions")
       local fb_actions = require("telescope").extensions.file_browser.actions
-    
-    opts.defaults = vim.tbl_deep_extend("force", opts.defaults, {
+
+      opts.defaults = vim.tbl_deep_extend("force", opts.defaults, {
         wrap_results = true,
         layout_strategy = "horizontal",
         layout_config = { prompt_position = "top" },
@@ -164,9 +165,9 @@ return {
         mappings = {
           n = {},
         },
-    })
-   
-    opts.extensions = {
+      })
+
+      opts.extensions = {
         file_browser = {
           theme = "dropdown",
           -- disables netrw and use telescope-file-browser in its place
@@ -197,14 +198,13 @@ return {
         },
       }
 
-       telescope.setup(opts)
+      telescope.setup(opts)
       require("telescope").load_extension("fzf")
       require("telescope").load_extension("file_browser")
       require("telescope").load_extension("dap")
       require("telescope").load_extension("project")
       require("telescope").load_extension("undo")
       require("telescope").load_extension("telescope-fzf-native")
-
-      end,
+    end,
   },
 }
