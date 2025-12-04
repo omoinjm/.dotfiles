@@ -64,3 +64,13 @@ end
 
 # Nebius CLI
 set -Ux PATH $PATH "/home/omoinjm/.nebius/bin"
+
+if status --is-interactive
+    if test -f ~/.nebius/nebius.fish
+        source ~/.nebius/nebius.fish
+    end
+end
+
+# Encryption Key
+set -x GPG_PASSWORD REDACTED
+
