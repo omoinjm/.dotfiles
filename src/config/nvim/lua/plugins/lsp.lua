@@ -1,7 +1,7 @@
 return {
   -- tools
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
         "stylua",
@@ -35,32 +35,6 @@ return {
       inlay_hints = { enabled = false },
       ---@type lspconfig.options
       servers = {
-
-        -- Ensure mason installs the server
-        omnisharp = {},
-
-        clangd = {},
-
-        pyright = {},
-
-        ruff_lsp = {
-          keys = {
-            {
-              "<leader>co",
-              function()
-                vim.lsp.buf.code_action({
-                  apply = true,
-                  context = {
-                    only = { "source.organizeImports" },
-                    diagnostics = {},
-                  },
-                })
-              end,
-              desc = "Organize Imports",
-            },
-          },
-        },
-
         cssls = {},
         tailwindcss = {
           root_dir = function(...)
@@ -171,63 +145,24 @@ return {
           },
         },
       },
-      setup = {
-        clangd = function(_, _)
-          local base = require("omoi.lsp")
-          local on_attach = base.on_attach
-          local capabilities = base.capabilities
-
-          local lspconfig = require("lspconfig")
-
-          lspconfig.pyright.setup({
-            on_attach = on_attach,
-            capabilities = capabilities,
-            filetypes = { "python" },
-          })
-
-          lspconfig.clangd.setup({
-            on_attach = function(client, bufnr)
-              -- client.server_capabilities.signatureHelpProvider = false
-              on_attach(client, bufnr)
-            end,
-            capabilities = capabilities,
-            cmd = {
-              "clangd",
-              "--offset-encoding=utf-16",
-            },
-          })
-
-          return lspconfig
-        end,
-
-        ruff_lsp = function()
-          require("lazyvim.util").lsp.on_attach(function(client, _)
-            if client.name == "ruff_lsp" then
-              -- Disable hover in favor of Pyright
-              client.server_capabilities.hoverProvider = false
-            end
-          end)
-        end,
-
-        omnisharp = function(_, _)
-          require("lazyvim.util").lsp.on_attach(function(client, _)
-            if client.name == "omnisharp" then
-              ---@type string[]
-              local tokenModifiers = client.server_capabilities.semanticTokensProvider.legend.tokenModifiers
-              for i, v in ipairs(tokenModifiers) do
-                tokenModifiers[i] = v:gsub(" ", "_")
-              end
-              ---@type string[]
-              local tokenTypes = client.server_capabilities.semanticTokensProvider.legend.tokenTypes
-              for i, v in ipairs(tokenTypes) do
-                tokenTypes[i] = v:gsub(" ", "_")
-              end
-            end
-          end)
-          return false
-        end,
-      },
+      setup = {},
     },
   },
+  {
+    "neovim/nvim-lspconfig",
+    opts = function()
+      local keys = require("lazyvim.plugins.lsp.keymaps").get()
+      vim.list_extend(keys, {
+        {
+          "gd",
+          function()
+            -- DO NOT RESUSE WINDOW
+            require("telescope.builtin").lsp_definitions({ reuse_win = false })
+          end,
+          desc = "Goto Definition",
+          has = "definition",
+        },
+      })
+    end,
+  },
 }
-
