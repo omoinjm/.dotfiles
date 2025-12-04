@@ -21,6 +21,15 @@ return {
         "scss",
         "sql",
         "svelte",
+        "python",
+        "bash",
+        "dockerfile",
+        "yaml",
+        "python",
+        "ninja",
+        "rst",
+        "toml",
+        "c_sharp",
       },
 
       -- matchup = {
