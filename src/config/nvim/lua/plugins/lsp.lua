@@ -12,6 +12,13 @@ return {
         "tailwindcss-language-server",
         "typescript-language-server",
         "css-lsp",
+        "clangd",
+        "clang-format",
+        "codelldb",
+        "pyright",
+        "debugpy",
+        "black",
+        "ruff",
       })
     end,
   },
