@@ -60,15 +60,12 @@ return {
     },
   },
 
-  -- animations
   {
-    "echasnovski/mini.animate",
-    event = "VeryLazy",
-    opts = function(_, opts)
-      opts.scroll = {
-        enable = false,
-      }
-    end,
+    "snacks.nvim",
+    opts = {
+      scroll = { enabled = false },
+    },
+    keys = {},
   },
 
   -- buffer line
@@ -79,25 +76,12 @@ return {
       { "<Tab>", "<Cmd>BufferLineCycleNext<CR>", desc = "Next tab" },
       { "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", desc = "Prev tab" },
     },
-    -- Show the tabs this hides it
-    -- opts = {
-    --   options = {
-    --     mode = "tabs",
-    --     -- separator_style = "slant",
-    --     show_buffer_close_icons = false,
-    --     show_close_icon = false,
-    --   },
-    -- },
-  },
-
-  -- statusline
-  {
-    "nvim-lualine/lualine.nvim",
-    event = "VeryLazy",
     opts = {
       options = {
-        -- globalstatus = false,
-        theme = "solarized_dark",
+        mode = "tabs",
+        -- separator_style = "slant",
+        show_buffer_close_icons = false,
+        show_close_icon = false,
       },
     },
   },
@@ -112,7 +96,7 @@ return {
       local colors = require("solarized-osaka.colors").setup()
       require("incline").setup({
         highlight = {
-        groups = {
+          groups = {
             InclineNormal = { guibg = colors.magenta500, guifg = colors.base04 },
             InclineNormalNC = { guifg = colors.violet500, guibg = colors.base03 },
           },
@@ -134,6 +118,25 @@ return {
     end,
   },
 
+  -- statusline
+  {
+    "nvim-lualine/lualine.nvim",
+    opts = function(_, opts)
+      local LazyVim = require("lazyvim.util")
+      opts.sections.lualine_c[4] = {
+        LazyVim.lualine.pretty_path({
+          length = 0,
+          relative = "cwd",
+          modified_hl = "MatchParen",
+          directory_hl = "",
+          filename_hl = "Bold",
+          modified_sign = "",
+          readonly_icon = " 󰌾 ",
+        }),
+      }
+    end,
+  },
+
   {
     "folke/zen-mode.nvim",
     cmd = "ZenMode",
@@ -148,27 +151,25 @@ return {
   },
 
   {
-    "nvimdev/dashboard-nvim",
-    event = "VimEnter",
-    config = function()
-      local logo = [[
-         ██████╗ ███╗   ███╗ ██████╗ ██╗███╗   ██╗     ██╗███╗   ███╗
-        ██╔═══██╗████╗ ████║██╔═══██╗██║████╗  ██║     ██║████╗ ████║
-        ██║   ██║██╔████╔██║██║   ██║██║██╔██╗ ██║     ██║██╔████╔██║
-        ██║   ██║██║╚██╔╝██║██║   ██║██║██║╚██╗██║██   ██║██║╚██╔╝██║
-        ╚██████╔╝██║ ╚═╝ ██║╚██████╔╝██║██║ ╚████║╚█████╔╝██║ ╚═╝ ██║
-         ╚═════╝ ╚═╝     ╚═╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚════╝ ╚═╝     ╚═╝
-      ]]
+    "MeanderingProgrammer/render-markdown.nvim",
+    enabled = false,
+  },
 
-      logo = string.rep("\n", 8) .. logo .. "\n\n"
-
-      require('dashboard').setup {
-        -- config
-        config = {
-          header = vim.split(logo, "\n")
-        }
-      }
-    end,
-    dependencies = { {'nvim-tree/nvim-web-devicons'}}
+  {
+    "folke/snacks.nvim",
+    opts = {
+      dashboard = {
+        preset = {
+          header = [[
+	        ██████╗ ███████╗██╗   ██╗ █████╗ ███████╗██╗     ██╗███████╗███████╗
+	        ██╔══██╗██╔════╝██║   ██║██╔══██╗██╔════╝██║     ██║██╔════╝██╔════╝
+	        ██║  ██║█████╗  ██║   ██║███████║███████╗██║     ██║█████╗  █████╗
+	        ██║  ██║██╔══╝  ╚██╗ ██╔╝██╔══██║╚════██║██║     ██║██╔══╝  ██╔══╝
+	        ██████╔╝███████╗ ╚████╔╝ ██║  ██║███████║███████╗██║██║     ███████╗
+	        ╚═════╝ ╚══════╝  ╚═══╝  ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝╚═╝     ╚══════╝
+   ]],
+        },
+      },
+    },
   },
 }
