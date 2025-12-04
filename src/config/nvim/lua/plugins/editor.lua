@@ -42,6 +42,8 @@ return {
     },
   },
 
+  { "junegunn/fzf.vim", dependencies = { "junegunn/fzf" } },
+
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
@@ -210,6 +212,10 @@ return {
       telescope.setup(opts)
       require("telescope").load_extension("fzf")
       require("telescope").load_extension("file_browser")
+      require("telescope").load_extension("dap")
+      require("telescope").load_extension("project")
+      require("telescope").load_extension("undo")
+      require("telescope").load_extension("telescope-fzf-native")
     end,
   },
 
