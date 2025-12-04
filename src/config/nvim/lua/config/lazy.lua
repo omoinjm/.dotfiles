@@ -1,16 +1,13 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
-      { "\nPress any key to exit..." },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
-  end
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -22,26 +19,27 @@ require("lazy").setup({
       import = "lazyvim.plugins",
       opts = {
         colorscheme = "solarized-osaka",
+        news = {
+          lazyvim = true,
+          neovim = true,
+        },
       },
     },
-    -- import any extra modules here
+    -- import any extras modules here
     { import = "lazyvim.plugins.extras.linting.eslint" },
     { import = "lazyvim.plugins.extras.formatting.prettier" },
     { import = "lazyvim.plugins.extras.lang.typescript" },
     { import = "lazyvim.plugins.extras.lang.json" },
-    { import = "lazyvim.plugins.extras.lang.markdown" },
+    -- { import = "lazyvim.plugins.extras.lang.markdown" },
     { import = "lazyvim.plugins.extras.lang.rust" },
     { import = "lazyvim.plugins.extras.lang.tailwind" },
-    -- { import = "lazyvim.plugins.extras.coding.copilot" },
     -- { import = "lazyvim.plugins.extras.dap.core" },
-    { import = "lazyvim.plugins.extras.vscode" },
+    -- { import = "lazyvim.plugins.extras.vscode" },
     { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
     -- { import = "lazyvim.plugins.extras.test.core" },
-    { import = "lazyvim.plugins.extras.coding.yanky" },
-    { import = "lazyvim.plugins.extras.editor.mini-files" },
-    { import = "lazyvim.plugins.extras.util.project" },
-
-    -- import/override with your plugins
+    -- { import = "lazyvim.plugins.extras.coding.yanky" },
+    -- { import = "lazyvim.plugins.extras.editor.mini-files" },
+    -- { import = "lazyvim.plugins.extras.util.project" },
     { import = "plugins" },
   },
   defaults = {
@@ -53,19 +51,23 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  install = { colorscheme = { "tokyonight", "habamax" } },
-  checker = {
-    enabled = true, -- check for plugin updates periodically
-    notify = false, -- notify on update
-  }, -- automatically check for plugin updates
+  dev = {
+    path = "~/.ghq/github.com",
+  },
+  checker = { enabled = true }, -- automatically check for plugin updates
   performance = {
+    cache = {
+      enabled = true,
+      -- disable_events = {},
+    },
     rtp = {
       -- disable some rtp plugins
       disabled_plugins = {
         "gzip",
         -- "matchit",
         -- "matchparen",
-        -- "netrwPlugin",
+        "netrwPlugin",
+        "rplugin",
         "tarPlugin",
         "tohtml",
         "tutor",
@@ -73,4 +75,12 @@ require("lazy").setup({
       },
     },
   },
+  ui = {
+    custom_keys = {
+      ["<localleader>d"] = function(plugin)
+        dd(plugin)
+      end,
+    },
+  },
+  debug = false,
 })
