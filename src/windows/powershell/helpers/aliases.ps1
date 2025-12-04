@@ -12,6 +12,7 @@ Set-Alias -Name iis -Value "C:\Program Files\IIS Express\iisexpress.exe" -Option
 Set-Alias -Name openvpn -Value "C:\Program Files\OpenVPN\bin\openvpn.exe" -Option AllScope
 Set-Alias -Name cl -Value "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\bin\Hostx64\x64\cl.exe"
 # Set-Alias -Name touch -Value "C:\Program Files\Git\usr\bin\touch.exe" -Option AllScope
+Set-Alias -Name java -Value "C:\Users\nhlan\.jdks\ms-17.0.15\bin\java.exe"
 
 # Utilities
 

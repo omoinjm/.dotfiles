@@ -19,6 +19,11 @@ return {
         "debugpy",
         "black",
         "ruff",
+        "gopls",
+        "css-variables-language-server",
+        "dotenv-linter",
+        "docker-language-server",
+        "goimports"
       })
     end,
   },
