@@ -67,13 +67,13 @@ keymap.set("n", "<C-j>", function()
 end, opts)
 
 keymap.set("n", "<leader>r", function()
-  require("craftzdog.hsl").replaceHexWithHSL()
+  require("omoi.hsl").replaceHexWithHSL()
 end)
 
 keymap.set("n", "<leader>i", function()
-  require("craftzdog.lsp").toggleInlayHints()
+  require("omoi.lsp").toggleInlayHints()
 end)
 
 vim.api.nvim_create_user_command("ToggleAutoformat", function()
-  require("craftzdog.lsp").toggleAutoformat()
+  require("omoi.lsp").toggleAutoformat()
 end, {})
