@@ -11,3 +11,5 @@
 
 # # fzf plugin
 # fzf_configure_bindings --directory=\co
+
+fzf --fish | source

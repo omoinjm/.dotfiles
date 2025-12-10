@@ -73,8 +73,18 @@ return {
     "akinsho/bufferline.nvim",
     event = "VeryLazy",
     keys = {
-      { "<Tab>", "<Cmd>BufferLineCycleNext<CR>", desc = "Next tab" },
-      { "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", desc = "Prev tab" },
+      {
+        "<Tab>",
+        "<Cmd>BufferLineCycleNext<CR>",
+        mode = "n",
+        desc = "Next tab",
+      },
+      {
+        "<S-Tab>",
+        "<Cmd>BufferLineCyclePrev<CR>",
+        mode = "n",
+        desc = "Prev tab",
+      },
     },
 
     -- Show the tabs this hides it
