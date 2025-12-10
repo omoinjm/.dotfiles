@@ -53,7 +53,6 @@ end
 
 # Theme
 oh-my-posh init fish --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/bubblesextra.omp.json' | source
-# oh-my-posh init fish --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/catppuccin_latte.omp.json' | source
 
 # pnpm
 set -gx PNPM_HOME "/home/omoinjm/.local/share/pnpm"
@@ -73,3 +72,8 @@ end
 
 # Encryption Key
 set -x GPG_PASSWORD r0KlijQtD2sAm9QVdvHL
+
+# FZF
+set -x FZF_DEFAULT_COMMAND "fd --hidden"
+set -x FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
+set -x FZF_ALT_C_COMMAND "$FZF_DEFAULT_COMMAND --type d"
