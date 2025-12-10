@@ -34,7 +34,7 @@ set -x SSH_AGENT_PID 106489
 set -gx PATH node_modules/.bin $PATH
 
 # Go
-set -g GOPATH $HOME/go
+set -g GOPATH /usr/local/go
 set -gx PATH $GOPATH/bin $PATH
 
 switch (uname)
@@ -73,4 +73,3 @@ end
 
 # Encryption Key
 set -x GPG_PASSWORD REDACTED
-
