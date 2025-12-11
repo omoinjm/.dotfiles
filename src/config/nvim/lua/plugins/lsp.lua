@@ -25,6 +25,7 @@ return {
         "docker-language-server",
         "goimports",
         "lua-language-server",
+        "prettier",
       })
     end,
   },
