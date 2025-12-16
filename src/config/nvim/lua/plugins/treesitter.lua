@@ -30,6 +30,8 @@ return {
         "rst",
         "toml",
         "c_sharp",
+        "lua",
+        "c",
       },
 
       -- matchup = {

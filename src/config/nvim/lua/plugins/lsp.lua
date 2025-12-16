@@ -23,7 +23,9 @@ return {
         "css-variables-language-server",
         "dotenv-linter",
         "docker-language-server",
-        "goimports"
+        "goimports",
+        "lua-language-server",
+        "prettier",
       })
     end,
   },
@@ -150,19 +152,23 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    opts = function()
-      local keys = require("lazyvim.plugins.lsp.keymaps").get()
-      vim.list_extend(keys, {
-        {
-          "gd",
-          function()
-            -- DO NOT RESUSE WINDOW
-            require("telescope.builtin").lsp_definitions({ reuse_win = false })
-          end,
-          desc = "Goto Definition",
-          has = "definition",
+    opts = {
+      servers = {
+        -- Apply to all servers
+        ["*"] = {
+          keys = {
+            {
+              "gd",
+              function()
+                -- DO NOT REUSE WINDOW
+                require("telescope.builtin").lsp_definitions({ reuse_win = false })
+              end,
+              desc = "Goto Definition",
+              has = "definition",
+            },
+          },
         },
-      })
-    end,
+      },
+    },
   },
 }

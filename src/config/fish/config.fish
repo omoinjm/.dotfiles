@@ -27,16 +27,6 @@ set -gx PATH bin $PATH
 set -gx PATH ~/bin $PATH
 set -gx PATH ~/.local/bin $PATH
 
-set -x SSH_AUTH_SOCK /tmp/ssh-REDACTED/agent.0
-set -x SSH_AGENT_PID 106489
-
-# NodeJS
-set -gx PATH node_modules/.bin $PATH
-
-# Go
-set -g GOPATH $HOME/go
-set -gx PATH $GOPATH/bin $PATH
-
 switch (uname)
     case Darwin
         source (dirname (status --current-filename))/config-osx.fish
@@ -50,27 +40,3 @@ set LOCAL_CONFIG (dirname (status --current-filename))/config-local.fish
 if test -f $LOCAL_CONFIG
     source $LOCAL_CONFIG
 end
-
-# Theme
-oh-my-posh init fish --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/bubblesextra.omp.json' | source
-# oh-my-posh init fish --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/catppuccin_latte.omp.json' | source
-
-# pnpm
-set -gx PNPM_HOME "/home/omoinjm/.local/share/pnpm"
-if not string match -q -- $PNPM_HOME $PATH
-    set -gx PATH "$PNPM_HOME" $PATH
-end
-# pnpm end
-
-# Nebius CLI
-set -Ux PATH $PATH "/home/omoinjm/.nebius/bin"
-
-if status --is-interactive
-    if test -f ~/.nebius/nebius.fish
-        source ~/.nebius/nebius.fish
-    end
-end
-
-# Encryption Key
-set -x GPG_PASSWORD REDACTED
-
