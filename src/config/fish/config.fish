@@ -52,7 +52,7 @@ if test -f $LOCAL_CONFIG
 end
 
 # Theme
-oh-my-posh init fish --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/bubblesextra.omp.json' | source
+oh-my-posh init fish --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/jblab_2021.omp.json' | source
 
 # pnpm
 set -gx PNPM_HOME "/home/omoinjm/.local/share/pnpm"
