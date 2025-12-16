@@ -1,0 +1,7 @@
+set -gx PATH node_modules/.bin $PATH
+
+# pnpm
+set -gx PNPM_HOME "/home/omoinjm/.local/share/pnpm"
+if not string match -q -- $PNPM_HOME $PATH
+    set -gx PATH "$PNPM_HOME" $PATH
+end
