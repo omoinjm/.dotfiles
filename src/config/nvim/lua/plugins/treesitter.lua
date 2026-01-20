@@ -32,6 +32,11 @@ return {
         "c_sharp",
         "lua",
         "c",
+        "git_config",
+        "gitcommit",
+        "git_rebase",
+        "gitignore",
+        "gitattributes",
       },
 
       -- matchup = {
