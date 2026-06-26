@@ -45,3 +45,7 @@ set LOCAL_CONFIG (dirname (status --current-filename))/config-local.fish
 if test -f $LOCAL_CONFIG
     source $LOCAL_CONFIG
 end
+
+
+# Added by Antigravity CLI installer
+set -gx PATH "/home/omoinjm/.local/bin" $PATH
