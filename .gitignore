@@ -75,6 +75,10 @@ home/.config/fish/conf.d/secrets.fish
 home/.config/fish/conf.d/ssh.fish
 
 # Secrets and private keys (never commit)
+secrets/password-store/exported-keys/private.pgp
+secrets/password-store/exported-keys/public.pgp
+!secrets/password-store/exported-keys/private.pgp.example
+!secrets/password-store/exported-keys/public.pgp.example
 **/private.pgp
 **/secrets.fish
 !**/secrets.fish.example

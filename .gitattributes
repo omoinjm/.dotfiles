@@ -1,0 +1,11 @@
+# Shell scripts must use LF so shebangs work on Linux/macOS/WSL.
+*.sh text eol=lf
+
+# GitHub Actions and other CI YAML.
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# Fish and common config formats.
+*.fish text eol=lf
+*.bash text eol=lf
+*.zsh text eol=lf

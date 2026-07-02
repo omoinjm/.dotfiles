@@ -47,7 +47,7 @@ if test -f $LOCAL_CONFIG
 end
 
 # opencode
-fish_add_path /home/omoinjm/.opencode/bin
+fish_add_path "$HOME/.opencode/bin"
 
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
