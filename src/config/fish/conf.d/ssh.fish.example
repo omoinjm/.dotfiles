@@ -1,0 +1,7 @@
+# Copy to ssh.fish (gitignored) when forwarding an SSH agent from a specific session.
+#   cp ssh.fish.example ssh.fish
+#
+# Prefer letting your OS or terminal set SSH_AUTH_SOCK automatically when possible.
+
+# set -x SSH_AUTH_SOCK /tmp/ssh-XXXX/agent.NNNNN
+# set -x SSH_AGENT_PID NNNNN
