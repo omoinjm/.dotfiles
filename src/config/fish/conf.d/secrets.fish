@@ -1,1 +1,0 @@
-set -x GPG_PASSWORD r0KlijQtD2sAm9QVdvHL
