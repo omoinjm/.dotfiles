@@ -2,11 +2,32 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-FISH_DIR="$ROOT/src/config/fish"
+FISH_DIR="$ROOT/home/.config/fish"
 FAILED=0
 
 pass() { echo "PASS: $1"; }
 fail() { echo "FAIL: $1"; FAILED=1; }
+
+echo "==> Checking repository layout"
+for path in \
+  home/.config/fish \
+  home/.config/nvim \
+  platform/linux/shell/bash \
+  platform/windows/powershell \
+  secrets/fish \
+  install/link.sh; do
+  if [[ -e "$ROOT/$path" ]]; then
+    pass "layout: $path"
+  else
+    fail "missing layout path: $path"
+  fi
+done
+
+if [[ -d "$ROOT/src" ]]; then
+  fail "legacy src/ directory still exists"
+else
+  pass "legacy src/ removed"
+fi
 
 echo "==> Checking fish syntax"
 if command -v fish >/dev/null 2>&1; then
@@ -17,24 +38,24 @@ if command -v fish >/dev/null 2>&1; then
       fail "fish syntax: ${file#$ROOT/}"
       fish -n "$file" || true
     fi
-  done < <(find "$FISH_DIR" -name '*.fish' ! -name '*.example' -print0)
+  done < <(find "$FISH_DIR" -name '*.fish' -print0)
 else
   echo "SKIP: fish not installed"
 fi
 
 echo "==> Checking for committed secrets"
 SECRET_PATTERN='(GPG_PASSWORD\s+[^{]|BEGIN PGP PRIVATE KEY BLOCK|discord\.com/api/webhooks/[0-9]+/[A-Za-z0-9_-]+|Bot [A-Za-z0-9._-]{20,})'
-if rg -n "$SECRET_PATTERN" "$ROOT/src" -g '*.fish' -g '*.ps1' -g '*.pgp' -g '!*.example' >/dev/null 2>&1; then
+if rg -n "$SECRET_PATTERN" "$ROOT/home" "$ROOT/platform" -g '*.fish' -g '*.ps1' -g '*.pgp' -g '!*.example' >/dev/null 2>&1; then
   fail "possible secrets found in tracked source files"
-  rg -n "$SECRET_PATTERN" "$ROOT/src" -g '*.fish' -g '*.ps1' -g '*.pgp' -g '!*.example' || true
+  rg -n "$SECRET_PATTERN" "$ROOT/home" "$ROOT/platform" -g '*.fish' -g '*.ps1' -g '*.pgp' -g '!*.example' || true
 else
   pass "no obvious secrets in source files"
 fi
 
 echo "==> Checking for hardcoded home paths"
-if rg -n '/home/omoinjm|"/\.local/' "$ROOT/src/config/fish" -g '*.fish' -g '!*.example' >/dev/null 2>&1; then
+if rg -n '/home/omoinjm|"/\.local/' "$FISH_DIR" -g '*.fish' >/dev/null 2>&1; then
   fail "hardcoded or broken home paths found"
-  rg -n '/home/omoinjm|"/\.local/' "$ROOT/src/config/fish" -g '*.fish' -g '!*.example' || true
+  rg -n '/home/omoinjm|"/\.local/' "$FISH_DIR" -g '*.fish' || true
 else
   pass "no hardcoded home paths in fish config"
 fi
@@ -52,12 +73,12 @@ else
   fail "GOPATH is not set to \$HOME/go"
 fi
 
-echo "==> Checking local secret examples exist"
-for example in secrets.fish.example ssh.fish.example; do
-  if [[ -f "$FISH_DIR/conf.d/$example" ]]; then
-    pass "example present: conf.d/$example"
+echo "==> Checking secret examples exist"
+for example in secrets/fish/secrets.fish.example secrets/fish/ssh.fish.example secrets/discord/env.example; do
+  if [[ -f "$ROOT/$example" ]]; then
+    pass "example present: $example"
   else
-    fail "missing example: conf.d/$example"
+    fail "missing example: $example"
   fi
 done
 
@@ -67,6 +88,15 @@ for pattern in 'conf.d/secrets.fish' 'conf.d/ssh.fish' '.last_cleanup_date' 'pri
     pass "gitignore covers $pattern"
   else
     fail "gitignore missing pattern: $pattern"
+  fi
+done
+
+echo "==> Checking install scripts are executable"
+for script in install/link.sh install/install.sh; do
+  if [[ -x "$ROOT/$script" ]]; then
+    pass "executable: $script"
+  else
+    fail "not executable: $script"
   fi
 done
 
