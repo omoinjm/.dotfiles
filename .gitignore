@@ -68,6 +68,21 @@ Pods/
 # Fish local config
 .config/fish/config-local.fish
 .config/fish/fish_variables.x86_64
+home/.config/fish/config-local.fish
+home/.config/fish/fish_variables
+home/.config/fish/.last_cleanup_date
+home/.config/fish/conf.d/secrets.fish
+home/.config/fish/conf.d/ssh.fish
+
+# Secrets and private keys (never commit)
+**/private.pgp
+**/secrets.fish
+!**/secrets.fish.example
+**/ssh.fish
+!**/ssh.fish.example
+.env
+.env.*
+!.env.example
 
 # Karabiner
 .config/karabiner/automatic_backups
