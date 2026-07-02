@@ -1,9 +1,13 @@
 {
   "extras": [
+<<<<<<< HEAD
     "lazyvim.plugins.extras.ai.copilot-chat",
     "lazyvim.plugins.extras.ai.copilot-native",
     "lazyvim.plugins.extras.ui.smear-cursor",
     "lazyvim.plugins.extras.vscode"
+=======
+
+>>>>>>> 926ab7c957bf48aab795bcbafe8d03ad11f46eeb
   ],
   "install_version": 7,
   "news": {
