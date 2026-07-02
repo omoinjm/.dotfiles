@@ -44,7 +44,8 @@ else
 fi
 
 echo "==> Checking for committed secrets"
-SECRET_PATTERN='(GPG_PASSWORD\s+[^{]|BEGIN PGP PRIVATE KEY BLOCK|discord\.com/api/webhooks/[0-9]+/[A-Za-z0-9_-]+|Bot [A-Za-z0-9._-]{20,})'
+PGP_PRIVATE_BLOCK='BEGIN PGP PRIVATE KEY BLOCK'
+SECRET_PATTERN="(GPG_PASSWORD\\s+[^{]|${PGP_PRIVATE_BLOCK}|discord\\.com/api/webhooks/[0-9]+/[A-Za-z0-9_-]+|Bot [A-Za-z0-9._-]{20,})"
 if rg -n "$SECRET_PATTERN" "$ROOT/home" "$ROOT/platform" -g '*.fish' -g '*.ps1' -g '*.pgp' -g '!*.example' >/dev/null 2>&1; then
   fail "possible secrets found in tracked source files"
   rg -n "$SECRET_PATTERN" "$ROOT/home" "$ROOT/platform" -g '*.fish' -g '*.ps1' -g '*.pgp' -g '!*.example' || true
