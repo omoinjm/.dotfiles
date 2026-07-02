@@ -68,11 +68,11 @@ Pods/
 # Fish local config
 .config/fish/config-local.fish
 .config/fish/fish_variables.x86_64
-src/config/fish/config-local.fish
-src/config/fish/fish_variables
-src/config/fish/.last_cleanup_date
-src/config/fish/conf.d/secrets.fish
-src/config/fish/conf.d/ssh.fish
+home/.config/fish/config-local.fish
+home/.config/fish/fish_variables
+home/.config/fish/.last_cleanup_date
+home/.config/fish/conf.d/secrets.fish
+home/.config/fish/conf.d/ssh.fish
 
 # Secrets and private keys (never commit)
 **/private.pgp

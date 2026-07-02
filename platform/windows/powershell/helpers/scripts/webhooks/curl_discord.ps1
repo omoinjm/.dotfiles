@@ -1,5 +1,5 @@
 # Discord helpers. Set DISCORD_WEBHOOK_URL (and optionally DISCORD_BOT_TOKEN) in your environment.
-# See curl_discord.ps1.example for setup.
+# See secrets/discord/env.example for setup.
 
 function send_discord {
     [CmdletBinding()]
