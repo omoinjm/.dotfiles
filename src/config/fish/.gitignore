@@ -109,3 +109,7 @@ target/
 .claude/
 
 fish_variables
+config-local.fish
+.last_cleanup_date
+conf.d/secrets.fish
+conf.d/ssh.fish

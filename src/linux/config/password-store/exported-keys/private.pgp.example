@@ -1,0 +1,6 @@
+# Local-only password-store key export (gitignored).
+#
+# Export your private key locally if needed:
+#   pass insert password-store/exported-keys/private
+#
+# Or copy from a secure backup — never commit private key material.
