@@ -69,5 +69,6 @@ function sys_cleanup_due --description 'Run sys_cleanup if it has not run today'
         return 1
     end
 
+    nvm use 24
     sys_cleanup
 end
