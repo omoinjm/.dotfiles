@@ -15,7 +15,9 @@ alias la "ls -A"
 alias ll "ls -l"
 alias lla "ll -A"
 alias g git
-command -qv nvim && alias vim nvim
+alias cls clear
+
+command -qv nvim && alias vim nvim && aliases vi nvim
 
 # alias l='ls -F'
 command -v lsd >/dev/null && alias ls='lsd --group-dirs first' && alias tree='lsd --tree'
