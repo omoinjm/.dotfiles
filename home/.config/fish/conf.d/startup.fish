@@ -28,10 +28,10 @@ function sys_cleanup --description 'Clean package managers and app caches'
     end
 
     # Delete VS Code VSIX cache safely
-    if test -d ~/.vscode-server/data/CachedExtensionVSIXs/
-        echo "-> Removing VS Code VSIX cache..."
-        rm -rf ~/.vscode-server/data/CachedExtensionVSIXs/*
-    end
+    # if test -d ~/.vscode-server/data/CachedExtensionVSIXs/
+    #     echo "-> Removing VS Code VSIX cache..."
+    #     rm -rf ~/.vscode-server/data/CachedExtensionVSIXs/*
+    # end
 
     # Delete old Claude desktop app versions, keeping the newest
     if test -d ~/.local/share/claude/versions/
