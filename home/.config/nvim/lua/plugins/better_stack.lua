@@ -1,5 +1,5 @@
 return {
-  --- Better Stack
+  -- Better Stack
   ---- Inline copilot suggestions
   --{
   --  "zbirenbaum/copilot-cmp",
