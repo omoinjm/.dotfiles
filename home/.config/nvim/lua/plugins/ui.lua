@@ -86,15 +86,75 @@ return {
       { "]B", "<cmd>BufferLineMoveNext<cr>", desc = "Move buffer next" },
     },
 
-    -- Show the tabs this hides it
-    -- opts = {
-    --   options = {
-    --     mode = "tabs",
-    -- separator_style = "slant",
-    --    show_buffer_close_icons = false,
-    --    show_close_icon = false,
-    --   },
-    -- },
+    opts = function(_, opts)
+      local colors = require("solarized-osaka.colors").setup()
+      local bg = colors.bg
+      local inactive_bg = colors.base03
+      local inactive_fg = colors.cyan300
+      local active_bg = colors.yellow300
+      local active_fg = colors.base04
+
+      local function on_active(hl)
+        return vim.tbl_extend("force", { bg = active_bg, bold = false, italic = false }, hl)
+      end
+
+      local function on_inactive(hl)
+        return vim.tbl_extend("force", { bg = inactive_bg, bold = false, italic = false }, hl)
+      end
+
+      opts.options = vim.tbl_deep_extend("force", opts.options or {}, {
+        separator_style = "slant",
+        show_buffer_close_icons = false,
+        show_close_icon = false,
+        indicator = { style = "none" },
+      })
+
+      opts.highlights = vim.tbl_deep_extend("force", opts.highlights or {}, {
+        fill = { bg = bg, fg = inactive_fg },
+        background = on_inactive({ fg = inactive_fg }),
+        buffer = on_inactive({ fg = inactive_fg }),
+        buffer_visible = on_inactive({ fg = inactive_fg }),
+        buffer_selected = on_active({ fg = active_fg }),
+        separator = { fg = bg, bg = inactive_bg },
+        separator_visible = { fg = bg, bg = inactive_bg },
+        separator_selected = { fg = bg, bg = active_bg },
+        close_button = on_inactive({ fg = inactive_fg }),
+        close_button_visible = on_inactive({ fg = inactive_fg }),
+        close_button_selected = on_active({ fg = active_fg }),
+        indicator_selected = on_active({ fg = active_fg }),
+        numbers_selected = on_active({ fg = active_fg }),
+        modified_selected = on_active({ fg = colors.orange700 }),
+        diagnostic = on_inactive({ fg = inactive_fg }),
+        diagnostic_visible = on_inactive({ fg = inactive_fg }),
+        diagnostic_selected = on_active({ fg = active_fg }),
+        error = on_inactive({ fg = colors.red500, sp = colors.red500 }),
+        error_visible = on_inactive({ fg = colors.red500, sp = colors.red500 }),
+        error_selected = on_active({ fg = colors.red700, sp = colors.red700 }),
+        error_diagnostic = on_inactive({ fg = colors.red500, sp = colors.red500 }),
+        error_diagnostic_visible = on_inactive({ fg = colors.red500, sp = colors.red500 }),
+        error_diagnostic_selected = on_active({ fg = colors.red700, sp = colors.red700 }),
+        warning = on_inactive({ fg = colors.yellow500, sp = colors.yellow500 }),
+        warning_visible = on_inactive({ fg = colors.yellow500, sp = colors.yellow500 }),
+        warning_selected = on_active({ fg = active_fg, sp = colors.yellow700 }),
+        warning_diagnostic = on_inactive({ fg = colors.yellow500, sp = colors.yellow500 }),
+        warning_diagnostic_visible = on_inactive({ fg = colors.yellow500, sp = colors.yellow500 }),
+        warning_diagnostic_selected = on_active({ fg = colors.yellow700, sp = colors.yellow700 }),
+        hint = on_inactive({ fg = colors.cyan500, sp = colors.cyan500 }),
+        hint_visible = on_inactive({ fg = colors.cyan500, sp = colors.cyan500 }),
+        hint_selected = on_active({ fg = active_fg, sp = colors.cyan700 }),
+        hint_diagnostic = on_inactive({ fg = colors.cyan500, sp = colors.cyan500 }),
+        hint_diagnostic_visible = on_inactive({ fg = colors.cyan500, sp = colors.cyan500 }),
+        hint_diagnostic_selected = on_active({ fg = colors.cyan700, sp = colors.cyan700 }),
+        info = on_inactive({ fg = colors.blue500, sp = colors.blue500 }),
+        info_visible = on_inactive({ fg = colors.blue500, sp = colors.blue500 }),
+        info_selected = on_active({ fg = active_fg, sp = colors.blue700 }),
+        info_diagnostic = on_inactive({ fg = colors.blue500, sp = colors.blue500 }),
+        info_diagnostic_visible = on_inactive({ fg = colors.blue500, sp = colors.blue500 }),
+        info_diagnostic_selected = on_active({ fg = colors.blue700, sp = colors.blue700 }),
+      })
+
+      return opts
+    end,
   },
 
   -- filename
