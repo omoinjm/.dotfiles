@@ -60,6 +60,3 @@ if status is-interactive
     nvm use 22
 end
 
-
-# Added by Antigravity CLI installer
-set -gx PATH "/home/omoinjm/.local/bin" $PATH

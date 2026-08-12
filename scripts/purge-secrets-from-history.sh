@@ -23,8 +23,12 @@ Paths removed from all commits:
   - secrets/password-store/exported-keys/public.pgp
   - src/config/fish/fish_variables
 
+Literal strings redacted from all commits (file kept, only the secret text
+is replaced -- see scripts/purge-replace-text.txt for the current list):
+  - the sqlcmd password/user/host hardcoded in database_bak.sh history
+
 After running, rotate any credentials that were ever committed (GPG passphrase,
-PGP keys, webhooks, tokens). See SECURITY.md.
+PGP keys, webhooks, tokens, the sqlcmd password). See SECURITY.md.
 
 Usage:
   scripts/purge-secrets-from-history.sh --dry-run
@@ -76,12 +80,22 @@ paths=(
   src/config/fish/fish_variables
 )
 
+replace_text_file="$ROOT/scripts/purge-replace-text.txt"
+replace_literals=(
+  "GDXk7Qlg7xqPH6UCruyN:sqlcmd password"
+  "grooove_sql:sqlcmd user"
+  "13.42.225.186:sqlcmd host"
+)
+
 args=(--force)
 for path in "${paths[@]}"; do
   args+=(--path "$path" --invert-paths)
 done
+if [[ -f "$replace_text_file" ]]; then
+  args+=(--replace-text "$replace_text_file")
+fi
 
-SECRET_CONTENT_PATTERN='(GPG_PASSWORD[[:space:]]+[^{]|BEGIN PGP PRIVATE KEY BLOCK|discord\.com/api/webhooks/[0-9]+/[A-Za-z0-9_-]+|Bot [A-Za-z0-9._-]{20,}|-[Pp][[:space:]]+"[^"]{8,}"|(?i:password|passwd|pwd|secret|api[_-]?key)[[:space:]]*[:=][[:space:]]*"[^"[:space:]]{6,}"|AKIA[0-9A-Z]{16})'
+SECRET_CONTENT_PATTERN='(GPG_PASSWORD[[:space:]]+[^{]|BEGIN PGP PRIVATE KEY BLOCK|discord\.com/api/webhooks/[0-9]+/[A-Za-z0-9_-]+|Bot [A-Za-z0-9._-]{20,}|-P[[:space:]]+"[^"$][^"]{7,}"|(?i:password|passwd|pwd|secret|api[_-]?key)[[:space:]]*[:=][[:space:]]*"[^"$][^"[:space:]]{5,}"|AKIA[0-9A-Z]{16})'
 
 report_history_paths() {
   local path found=0
@@ -99,6 +113,26 @@ report_history_paths() {
   if [[ "$found" -eq 0 ]]; then
     echo
     echo "No purge targets found in history; rewrite may be unnecessary."
+  fi
+}
+
+report_replace_text_hits() {
+  local entry literal label count found=0
+  echo
+  echo "Literal secrets present in history (will be redacted, file kept):"
+  for entry in "${replace_literals[@]}"; do
+    literal="${entry%%:*}"
+    label="${entry#*:}"
+    count="$(git -C "$ROOT" log --all --oneline -S"$literal" | wc -l | tr -d ' ')"
+    if [[ "$count" -gt 0 ]]; then
+      found=1
+      echo "  - $label ($count commit(s))"
+    else
+      echo "  - $label (not in history)"
+    fi
+  done
+  if [[ "$found" -eq 0 ]]; then
+    echo "  (none)"
   fi
 }
 
@@ -142,6 +176,7 @@ if [[ "$mode" == "--dry-run" ]]; then
   echo "git filter-repo ${args[*]}"
   echo
   report_history_paths
+  report_replace_text_hits
   report_tracked_secret_hits
   report_local_gitignored
   exit 0
