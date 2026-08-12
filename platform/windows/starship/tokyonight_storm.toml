@@ -26,10 +26,7 @@ command_timeout = 5000
 format = """
 [➜ ](fg:#7aa2f7 bg:transparent)\
 $directory\
-[ \u26a1 ](fg:#7dcfff bg:transparent)\
-$git_branch\
-[\u2630 ](fg:#7dcfff bg:transparent)\
-$git_status\
+(${custom.git_branch}${custom.git_status}${custom.git_metrics}${custom.github})\
     $fill\
     $nodejs\
     $c\
@@ -100,26 +97,104 @@ style = "fg:#9ece6a"
 format = "[$indicator]($style)"
 
 #=== git ===
+# Built-in git modules use libgit2 and fail on WSL UNC paths from Windows
+# PowerShell. Custom modules below shell out to git/gh instead.
 
 [git_branch]
-symbol = ""
-style = "bg:transparent"
-format = '[[$symbol $branch ](fg:#7dcfff bg:transparent)]($style)'
+disabled = true
+
+[git_state]
+disabled = true
 
 [git_status]
-style = "bg:transparent"
-stashed = "\uf692 (${count}) "
-ahead = "⇡${count} "
-behind = "⇣${count} "
-diverged = "⇕${ahead_count} ${behind_count} "
-conflicted = "=${count} "
-modified = "[\uf044 ?(${count})](fg:#f7768e bg:transparent) "
-untracked = "[~${count}](fg:#f7768e bg:transparent)"
-deleted = "[-${count}](fg:#f7768e bg:transparent) "
-renamed = "»${count} "
-staged = "[\u26a1 ${count}](fg:#f7768e bg:transparent) "
-up_to_date = ""
-format = '[[($all_status$ahead_behind )](fg:##f7768e bg:transparent)]($style)'
+disabled = true
+use_git_executable = true
+
+[git_metrics]
+disabled = true
+
+[custom.git_branch]
+description = "Current git branch via git CLI (WSL-safe)"
+shell = ["pwsh.exe", "-NoProfile", "-Command", "-"]
+detect_folders = [".git"]
+command = '''
+$b = git branch --show-current 2>$null
+if (-not $b) { $b = git rev-parse --short HEAD 2>$null }
+$u = git rev-parse --abbrev-ref "@{u}" 2>$null
+if ($u -and $u -ne "@{u}") { "$b`:$u" } elseif ($b) { $b }
+'''
+format = ' [[  $output ](fg:#7dcfff bg:transparent)]($style)'
+style = "fg:#7dcfff bg:transparent"
+ignore_timeout = true
+
+[custom.git_status]
+description = "Working tree and upstream status via git CLI (WSL-safe)"
+shell = ["pwsh.exe", "-NoProfile", "-Command", "-"]
+detect_folders = [".git"]
+command = '''
+$p = @(git status --porcelain 2>$null)
+$s = @()
+if ($p.Count -gt 0) {
+  $staged = @($p | Where-Object { $_ -match '^[MADRCU]' }).Count
+  $modified = @($p | Where-Object { $_ -match '^.[MADRCU]' -and $_ -notmatch '^\?\?' }).Count
+  $untracked = @($p | Where-Object { $_ -match '^\?\?' }).Count
+  if ($staged -gt 0) { $s += [char]0x26A1 + " $staged" }
+  if ($modified -gt 0) { $s += "?($modified)" }
+  if ($untracked -gt 0) { $s += "~$untracked" }
+}
+$ab = git rev-list --left-right --count '@{u}...HEAD' 2>$null
+if ($ab -match '^(\d+)\s+(\d+)') {
+  $beh = [int]$matches[1]; $ahead = [int]$matches[2]
+  if ($ahead -gt 0 -and $beh -gt 0) { $s += "⇕$ahead $beh" }
+  elseif ($ahead -gt 0) { $s += "⇡$ahead" }
+  elseif ($beh -gt 0) { $s += "⇣$beh" }
+}
+if ($s.Count -gt 0) { $s -join ' ' }
+'''
+format = ' [[  $output ](fg:#f7768e bg:transparent)]($style)'
+style = "fg:#f7768e bg:transparent"
+ignore_timeout = true
+
+[custom.git_metrics]
+description = "Line diff stats via git CLI (WSL-safe)"
+shell = ["pwsh.exe", "-NoProfile", "-Command", "-"]
+detect_folders = [".git"]
+command = '''
+$added = 0; $deleted = 0
+foreach ($line in @((git diff --numstat 2>$null)) + @((git diff --cached --numstat 2>$null))) {
+  if ($line -match '^(\d+)\s+(\d+)') {
+    $added += [int]$matches[1]
+    $deleted += [int]$matches[2]
+  }
+}
+if ($added -gt 0 -or $deleted -gt 0) { "(+$added/-$deleted)" }
+'''
+format = ' [[ $output ](fg:#9ece6a bg:transparent)]($style)'
+style = "fg:#9ece6a bg:transparent"
+ignore_timeout = true
+
+[custom.github]
+description = "GitHub repo slug; adds PR number when one exists"
+shell = ["pwsh.exe", "-NoProfile", "-Command", "-"]
+detect_folders = [".git"]
+command = '''
+$remote = git remote get-url origin 2>$null
+if ($remote -match 'github[^/:]*[:/](?<owner>[^/]+)/(?<repo>[^/.]+)') {
+  $out = "$($matches.owner)/$($matches.repo -replace '\.git$','')"
+} elseif ($remote) {
+  $out = ($remote -replace '\.git$','')
+} else {
+  $out = Split-Path (git rev-parse --show-toplevel 2>$null) -Leaf
+}
+try {
+  $pr = gh pr view --json number -q .number 2>$null
+  if ($pr) { $out += " #$pr" }
+} catch {}
+$out
+'''
+format = ' [[  $output ](fg:#bb9af7 bg:transparent)]($style)'
+style = "fg:#bb9af7 bg:transparent"
+ignore_timeout = true
 
 #=== cloud ===
 [azure]

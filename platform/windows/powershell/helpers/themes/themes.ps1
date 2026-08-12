@@ -28,13 +28,33 @@ Set-PSReadLineKeyHandler -Key 'Ctrl+r' -ScriptBlock { fzf }
 
 # STARSHIP THEME
 $env:STARSHIP_DISTRO = "者 omoi "
-$env:STARSHIP_CONFIG = "$env:USERPROFILE\.config\starship\json.toml"
+$env:STARSHIP_CONFIG = "$env:USERPROFILE\.config\starship\tokyonight_storm.toml"
 
+function Register-WslGitSafeDirectory {
+    $top = git rev-parse --show-toplevel 2>$null
+    if (-not $top -or $top -notmatch '^//wsl\.') { return }
+
+    # Git for Windows expects: %(prefix)///wsl.localhost/Distro/...
+    $entry = '%(prefix)/' + $top
+    $existing = @(git config --global --get-all safe.directory 2>$null)
+    if ($existing -notcontains $entry) {
+        git config --global --add safe.directory $entry | Out-Null
+    }
+}
+
+Register-WslGitSafeDirectory
 
 function Invoke-Starship-TransientFunction {
     &starship module character
 }
 
 Invoke-Expression (&starship init powershell)
+# Invoke-Expression (&posh init powershell)
+
+$script:StarshipPrompt = Get-Command prompt -CommandType Function
+function global:prompt {
+    Register-WslGitSafeDirectory
+    & $script:StarshipPrompt.ScriptBlock
+}
 
 Enable-TransientPrompt

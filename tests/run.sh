@@ -18,7 +18,7 @@ FORBIDDEN_TRACKED=(
   secrets/password-store/exported-keys/public.pgp
 )
 
-SECRET_PATTERN='(GPG_PASSWORD[[:space:]]+[^{]|BEGIN PGP PRIVATE KEY BLOCK|discord\.com/api/webhooks/[0-9]+/[A-Za-z0-9_-]+|Bot [A-Za-z0-9._-]{20,})'
+SECRET_PATTERN='(GPG_PASSWORD[[:space:]]+[^{]|BEGIN PGP PRIVATE KEY BLOCK|discord\.com/api/webhooks/[0-9]+/[A-Za-z0-9_-]+|Bot [A-Za-z0-9._-]{20,}|-[Pp][[:space:]]+"[^"]{8,}"|(?i:password|passwd|pwd|secret|api[_-]?key)[[:space:]]*[:=][[:space:]]*"[^"[:space:]]{6,}"|AKIA[0-9A-Z]{16})'
 HOME_PATH_PATTERN='/home/omoinjm|"/\.local/'
 
 echo "==> Checking repository layout"

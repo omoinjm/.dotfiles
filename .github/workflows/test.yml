@@ -14,5 +14,11 @@ jobs:
       - name: Install fish
         run: sudo apt-get update && sudo apt-get install -y fish ripgrep
 
+      - name: Shellcheck
+        # continue-on-error until the existing backlog of warnings is cleaned up;
+        # flip to blocking once `shellcheck $(git ls-files '*.sh')` is clean locally.
+        run: shellcheck $(git ls-files '*.sh')
+        continue-on-error: true
+
       - name: Run dotfiles tests
         run: bash tests/run.sh

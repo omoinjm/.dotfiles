@@ -25,10 +25,13 @@ node_modules
 bower_components
 fishd.*
 
-# Files 
+# Files
 /configstore/
 /pulse/
 /scoop/
+
+# tmux plugins (fetched by tpm at runtime, not tracked source)
+home/.config/tmux/plugins/
 
 # Vim
 Session.vim
