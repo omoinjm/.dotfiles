@@ -222,5 +222,5 @@ Old path → new path:
 
 ## About
 
-- [Twitter @nhlanhlamalaza\_](https://twitter.com/nhlanhlamalaza_)
-- [Personal Portfolio](https://njmtech.vercel.app/)
+- [Twitter @njmtech\_](https://twitter.com/njmtech)
+- [Portfolio](https://njmtech.vercel.app/)
