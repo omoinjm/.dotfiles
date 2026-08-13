@@ -1,5 +1,5 @@
-dotfiles=/mnt/d/omoi/git/dotfiles
-bash=$dotfiles/linux/shell/.bash
+bash="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+export DOTFILES_ROOT="$(cd "$bash/../../../.." && pwd)"
 
 [[ -f "$bash/scripts/env.sh" ]] && source "$bash/scripts/env.sh"
 [[ -f "$bash/scripts/aliases.sh" ]] && source "$bash/scripts/aliases.sh"
@@ -11,6 +11,4 @@ bash=$dotfiles/linux/shell/.bash
 eval "$(starship init bash)"
 
 # Load Direnv
-eval "$(direnv hook bash)"
-
-direnv allow
+command -v direnv >/dev/null 2>&1 && eval "$(direnv hook bash)"
