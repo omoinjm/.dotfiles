@@ -30,6 +30,20 @@ return {
   },
 
   {
+    "akinsho/git-conflict.nvim",
+    event = "BufReadPre",
+    opts = {
+      default_mappings = true, -- co = ours, ct = theirs, cb = both, c0 = none, ]x/[x = navigate
+      default_commands = true, -- :GitConflictChooseOurs / Theirs / Both / None / ListQf / NextConflict / PrevConflict
+      disable_diagnostics = false,
+      list_opener = "copen",
+    },
+    keys = {
+      { "<leader>gc", "<cmd>GitConflictListQf<cr>", desc = "List Git Conflicts (quickfix)" },
+    },
+  },
+
+  {
     "dinhhuy258/git.nvim",
     event = "BufReadPre",
     opts = {

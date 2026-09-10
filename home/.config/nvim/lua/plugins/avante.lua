@@ -19,17 +19,16 @@ return {
 
       -- Gemini Config
       provider = "gemini",
-      gemini = {
-        model = "gemini-1.5-flash", -- Fixed: Full model name (use "gemini-1.5-flash" for higher speed)
-        timeout = 30000, -- Timeout in milliseconds
-        temperature = 0.75,
-        max_tokens = 20480,
-      },
-
-      -- Note: If you want to keep the configuration blocks nested inside `providers = {}`
-      -- for local management, you can do that, but Avante reads root keys like `opts.gemini` directly.
 
       providers = {
+        -- Gemini Config
+        gemini = {
+          model = "gemini-1.5-flash", -- Fixed: Full model name (use "gemini-1.5-flash" for higher speed)
+          timeout = 30000, -- Timeout in milliseconds
+          temperature = 0.75,
+          max_tokens = 20480,
+        },
+
         -- OpenAI Config
         --  provider = "openai",
         --  providers = {
