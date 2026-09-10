@@ -27,6 +27,18 @@ function sys_cleanup --description 'Clean package managers and app caches'
         pnpm store prune
     end
 
+    # Clear Playwright browser cache
+    if test -d ~/.cache/ms-playwright
+        echo "-> Clearing Playwright cache..."
+        rm -rf ~/.cache/ms-playwright
+    end
+
+    # Prune Docker build cache
+    if type -q docker
+        echo "-> Pruning Docker build cache..."
+        docker builder prune -f
+    end
+
     # Delete VS Code VSIX cache safely
     # if test -d ~/.vscode-server/data/CachedExtensionVSIXs/
     #     echo "-> Removing VS Code VSIX cache..."
