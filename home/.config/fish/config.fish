@@ -57,6 +57,5 @@ set --export PATH $BUN_INSTALL/bin $PATH
 
 if status is-interactive
     sys_cleanup_due
-    nvm use 22
+    nvm use 24
 end
-
