@@ -58,4 +58,7 @@ set --export PATH $BUN_INSTALL/bin $PATH
 if status is-interactive
     sys_cleanup_due
     nvm use 24
+
+    # keep last: daily machine-snapshot status (no-op on machines without the log)
+    functions -q snapshot_status; and snapshot_status
 end
