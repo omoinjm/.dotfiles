@@ -44,6 +44,16 @@ return {
   },
 
   {
+    "sindrets/diffview.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewFileHistory" },
+    keys = {
+      { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "Diffview: Open (side-by-side merge/diff)" },
+      { "<leader>gh", "<cmd>DiffviewFileHistory<cr>", desc = "Diffview: File History" },
+    },
+  },
+
+  {
     "dinhhuy258/git.nvim",
     event = "BufReadPre",
     opts = {
