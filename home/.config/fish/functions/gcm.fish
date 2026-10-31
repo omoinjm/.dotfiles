@@ -4,6 +4,7 @@ function gcm --description "AI-suggested commit message from staged changes"
         return 1
     end
 
+    # Uses whichever provider answers first (usually Cloudflare in ~1s)
     set -l result (__gcm_suggest)
     set -l msg $result[1]
 
