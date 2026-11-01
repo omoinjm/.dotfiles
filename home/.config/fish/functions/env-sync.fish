@@ -1,4 +1,3 @@
-function env-sync --description "Pull + push the password store"
-    __env_check; or return 1
-    pass git pull --rebase; and pass git push
+function env-sync --wraps envctl --description "envctl sync: git pull --rebase + push"
+    envctl sync $argv
 end
