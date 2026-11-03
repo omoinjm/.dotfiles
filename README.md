@@ -220,6 +220,19 @@ Old path → new path:
 | `src/linux/shell/` | `platform/linux/shell/` |
 | `src/windows/` | `platform/windows/` |
 
+## TODO
+
+- [ ] **Bash: enable `git tag` version sync.** Fish already has it (`functions/git.fish`). For bash, add this
+  line to `~/.bashrc`:
+
+  ```bash
+  [ -f ~/.config/fish/scripts/git-tag-sync.bash ] && . ~/.config/fish/scripts/git-tag-sync.bash
+  ```
+
+  It makes `git tag v1.2.3` set the version in package.json, Cargo.toml, pyproject.toml and similar files,
+  commit them, then tag. `--dry-run` previews; `--no-sync` creates a plain tag. Details:
+  `~/.config/fish/scripts/git-tag-sync --help-sync`.
+
 ## About
 
 - [Twitter @njmtech\_](https://twitter.com/njmtech)
