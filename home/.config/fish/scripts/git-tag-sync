@@ -1,0 +1,327 @@
+#!/usr/bin/env python3
+"""git-tag-sync: `git tag v1.2.3` that first makes the project's version files say 1.2.3.
+
+Called by the `git` wrapper (fish: functions/git.fish, bash: scripts/git-tag-sync.bash) for every
+`git tag ...`, with the arguments after `tag`. Also works on its own: `git tag-sync v1.2.3` if it's on PATH.
+
+When the command creates a tag whose name is a version (v1.2.3, 1.2.3, v1.2.3-rc.1, v1.2.3+build.5) on HEAD:
+  1. finds the version files at the repo root that declare a version
+  2. rewrites the ones that differ (only the version string; formatting is kept)
+  3. commits just those files: "chore(release): <tag>" (other staged work stays staged, not committed)
+  4. runs the real `git tag` with your original arguments (-a, -m, -s, ... all pass through)
+Anything else (listing, deleting, non-version names, tagging an older commit) goes straight to git.
+
+  git tag v0.0.1                 # sync + commit + tag
+  git tag -a v0.0.1 -m "first"   # same, annotated
+  git tag v0.0.1 --dry-run       # show what would change, change nothing
+  git tag v0.0.1 --no-sync       # plain git tag
+
+Supported (root of the repo, only files that already declare a version):
+  package.json, package-lock.json, npm-shrinkwrap.json, deno.json(c), jsr.json, composer.json,
+  Cargo.toml (+ Cargo.lock), pyproject.toml ([project] / [tool.poetry], + uv.lock),
+  *.csproj / Directory.Build.props (<Version>), pubspec.yaml (keeps +build), Chart.yaml, VERSION
+It refuses (and changes nothing) if a file it needs to edit has uncommitted changes, or the tag exists.
+"""
+import glob
+import json
+import os
+import re
+import subprocess
+import sys
+
+SEMVER = re.compile(r"^[vV]?(\d+)\.(\d+)\.(\d+)(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$")
+# options of `git tag` that take a separate value
+VALUE_OPTS = {"-m", "--message", "-F", "--file", "-u", "--local-user", "--cleanup", "--trailer", "--sort",
+              "--format", "--points-at", "--contains", "--no-contains", "--merged", "--no-merged"}
+# options that mean "not creating a tag"
+NOT_CREATE = {"-l", "--list", "-d", "--delete", "-v", "--verify", "--contains", "--no-contains", "--merged",
+              "--no-merged", "--points-at", "--column", "--no-column"}
+
+
+def git(*args, check=True):
+    r = subprocess.run(["git", *args], capture_output=True, text=True)
+    if check and r.returncode != 0:
+        die(f"git {' '.join(args)}: {r.stderr.strip()}")
+    return r.stdout.strip()
+
+
+def die(msg):
+    print(f"git-tag-sync: {msg}", file=sys.stderr)
+    sys.exit(1)
+
+
+def passthrough(args):
+    sys.stdout.flush()
+    sys.stderr.flush()
+    os.execvp("git", ["git", "tag", *args])
+
+
+# ---------------------------------------------------------------- argument parsing
+
+def tag_target(args):
+    """(tag name, commit or None) if this `git tag` call creates a tag, else None."""
+    positional, i, opts_done = [], 0, False
+    while i < len(args):
+        a = args[i]
+        if opts_done or not a.startswith("-") or a == "-":
+            positional.append(a)
+        elif a == "--":
+            opts_done = True
+        else:
+            name = a.split("=", 1)[0]
+            short_mode = re.match(r"^-[a-zA-Z]+$", a) and a[1] not in "mFu" and set(a[1:]) & set("ldvn")
+            if name in NOT_CREATE or re.match(r"^-n\d*$", a) or short_mode:
+                return None
+            if a in VALUE_OPTS or (re.match(r"^-[a-zA-Z]+$", a) and a[-1] in "mFu"):   # -m msg, -am msg
+                i += 1
+        i += 1
+    if not positional:
+        return None
+    return positional[0], (positional[1] if len(positional) > 1 else None)
+
+
+# ---------------------------------------------------------------- file handlers
+# Each finder returns a list of (start, end, current) spans in the text; the update replaces them all.
+
+def json_top_key(text, key):
+    """Span of the string value of a top-level key, found without reformatting the file."""
+    depth, i, n = 0, 0, len(text)
+    while i < n:
+        c = text[i]
+        if c == '"':
+            j = i + 1
+            while j < n and text[j] != '"':
+                j += 2 if text[j] == "\\" else 1
+            if depth == 1 and text[i + 1:j] == key:
+                m = re.compile(r'\s*:\s*"((?:[^"\\]|\\.)*)"').match(text, j + 1)
+                if m:
+                    return [(m.start(1), m.end(1), m.group(1))]
+            i = j + 1
+            continue
+        if c in "{[":
+            depth += 1
+        elif c in "}]":
+            depth -= 1
+        i += 1
+    return []
+
+
+def toml_section(text, section):
+    """(start, end) of a TOML table's body, or None."""
+    h = re.search(r"^\[\s*" + re.escape(section) + r"\s*\][ \t]*(#.*)?$", text, re.M)
+    if not h:
+        return None
+    nxt = re.compile(r"^\s*\[", re.M).search(text, h.end())
+    return h.end(), (nxt.start() if nxt else len(text))
+
+
+def toml_key(text, section, key="version"):
+    sec = toml_section(text, section)
+    if not sec:
+        return []
+    m = re.compile(r"^[ \t]*" + key + r"[ \t]*=[ \t]*\"([^\"]*)\"", re.M).search(text, *sec)
+    return [(m.start(1), m.end(1), m.group(1))] if m else []
+
+
+def toml_value(text, section, key):
+    s = toml_key(text, section, key)
+    return s[0][2] if s else None
+
+
+def lock_entry(text, name):
+    m = re.search(r'^\[\[package\]\]\s*\nname = "' + re.escape(name) + r'"\s*\nversion = "([^"]*)"', text, re.M)
+    return [(m.start(1), m.end(1), m.group(1))] if m else []
+
+
+def find_package_json(text, _root):
+    return json_top_key(text, "version")
+
+
+def find_npm_lock(text, _root):
+    try:
+        data = json.loads(text)
+    except ValueError:
+        return []
+    spans = json_top_key(text, "version")
+    root_pkg = (data.get("packages") or {}).get("")
+    if root_pkg and "version" in root_pkg:
+        # the "packages": {"": {"version": ...}} entry: first "version" after the "" key
+        m = re.search(r'"packages"\s*:\s*\{\s*""\s*:\s*\{', text)
+        if m:
+            depth, i = 1, m.end()
+            while depth and i < len(text):
+                v = re.compile(r'"version"\s*:\s*"((?:[^"\\]|\\.)*)"').match(text, i)
+                if depth == 1 and v:
+                    spans.append((v.start(1), v.end(1), v.group(1)))
+                    break
+                if text[i] == '"':
+                    j = i + 1
+                    while text[j] != '"':
+                        j += 2 if text[j] == "\\" else 1
+                    i = j + 1
+                    continue
+                depth += {"{": 1, "[": 1, "}": -1, "]": -1}.get(text[i], 0)
+                i += 1
+    return spans
+
+
+def find_cargo(text, _root):
+    if re.search(r"^[ \t]*version(\.workspace[ \t]*=[ \t]*true|[ \t]*=[ \t]*\{[^}]*workspace)", text, re.M) \
+            and toml_section(text, "package"):
+        return toml_key(text, "workspace.package")
+    return toml_key(text, "package") or toml_key(text, "workspace.package")
+
+
+def find_cargo_lock(text, root):
+    try:
+        manifest = open(os.path.join(root, "Cargo.toml"), encoding="utf-8").read()
+    except OSError:
+        return []
+    name = toml_value(manifest, "package", "name")
+    return lock_entry(text, name) if name else []
+
+
+def find_pyproject(text, _root):
+    sec = toml_section(text, "project")
+    if sec and re.search(r"^[ \t]*dynamic[ \t]*=[^\n]*[\"']version[\"']", text[sec[0]:sec[1]], re.M):
+        return toml_key(text, "tool.poetry")
+    return toml_key(text, "project") or toml_key(text, "tool.poetry")
+
+
+def find_uv_lock(text, root):
+    try:
+        manifest = open(os.path.join(root, "pyproject.toml"), encoding="utf-8").read()
+    except OSError:
+        return []
+    name = toml_value(manifest, "project", "name")
+    return lock_entry(text, re.sub(r"[-_.]+", "-", name).lower()) if name else []
+
+
+def find_xml_version(text, _root):
+    m = re.search(r"<Version>\s*([^<\s]+)\s*</Version>", text)
+    return [(m.start(1), m.end(1), m.group(1))] if m else []
+
+
+def find_yaml_version(text, _root):
+    m = re.search(r"^version:[ \t]*[\"']?([^\"'\s#]+)", text, re.M)
+    return [(m.start(1), m.end(1), m.group(1))] if m else []
+
+
+def find_version_file(text, _root):
+    m = re.match(r"\s*([vV]?\d+\.\d+\.\d+\S*)\s*$", text)
+    return [(m.start(1), m.end(1), m.group(1))] if m else []
+
+
+HANDLERS = [
+    ("package.json", find_package_json),
+    ("package-lock.json", find_npm_lock),
+    ("npm-shrinkwrap.json", find_npm_lock),
+    ("deno.json", find_package_json),
+    ("deno.jsonc", find_package_json),
+    ("jsr.json", find_package_json),
+    ("composer.json", find_package_json),
+    ("Cargo.toml", find_cargo),
+    ("Cargo.lock", find_cargo_lock),
+    ("pyproject.toml", find_pyproject),
+    ("uv.lock", find_uv_lock),
+    ("*.csproj", find_xml_version),
+    ("Directory.Build.props", find_xml_version),
+    ("pubspec.yaml", find_yaml_version),
+    ("Chart.yaml", find_yaml_version),
+    ("VERSION", find_version_file),
+]
+
+
+def wanted(name, current, version):
+    """The value this file should hold for the tag's version."""
+    if name == "pubspec.yaml" and "+" not in version and "+" in current:
+        return version + current[current.index("+"):]   # keep Flutter's build number
+    if name == "VERSION" and current[:1] in "vV":
+        return current[0] + version
+    return version
+
+
+def core(v):
+    m = SEMVER.match(v)
+    return tuple(int(x) for x in m.groups()[:3]) if m else None
+
+
+# ---------------------------------------------------------------- main
+
+def main():
+    args = sys.argv[1:]
+    if args[:1] == ["--help-sync"]:
+        print(__doc__)
+        return
+    dry = "--dry-run" in args
+    nosync = "--no-sync" in args
+    args = [a for a in args if a not in ("--dry-run", "--no-sync")]
+    target = tag_target(args)
+    if nosync or not target or not SEMVER.match(target[0]):
+        if dry:
+            print("git-tag-sync: not a version tag on HEAD, nothing to sync")
+            return
+        passthrough(args)
+    tag, commit = target
+
+    root = git("rev-parse", "--show-toplevel")
+    if commit and git("rev-parse", f"{commit}^{{commit}}") != git("rev-parse", "HEAD"):
+        print(f"git-tag-sync: {tag} points at an older commit; version files left alone", file=sys.stderr)
+        passthrough(args)
+    if git("rev-parse", "-q", "--verify", f"refs/tags/{tag}", check=False) and not \
+            any(a in ("-f", "--force") for a in args):
+        die(f"tag {tag} already exists")
+    version = tag[1:] if tag[:1] in "vV" else tag
+
+    tracked = set(git("-C", root, "ls-files").splitlines())
+    changes = []   # (relpath, new text, [(old, new)])
+    for pattern, finder in HANDLERS:
+        for path in sorted(glob.glob(os.path.join(root, pattern))):
+            rel = os.path.relpath(path, root)
+            if rel not in tracked:
+                continue
+            text = open(path, encoding="utf-8").read()
+            spans = finder(text, root)
+            edits = [(s, e, cur, wanted(rel, cur, version)) for s, e, cur in spans]
+            edits = [x for x in edits if x[2] != x[3]]
+            if not edits:
+                continue
+            for s, e, _cur, new in sorted(edits, reverse=True):
+                text = text[:s] + new + text[e:]
+            changes.append((rel, text, [(c, n) for _s, _e, c, n in edits]))
+
+    if not changes:
+        if dry:
+            print(f"git-tag-sync: version files already say {version} (or none found); would just tag")
+            return
+        passthrough(args)
+
+    dirty = [] if dry else [rel for rel, *_ in changes
+             if git("status", "--porcelain", "--", os.path.join(root, rel))]
+    if dirty:
+        die(f"uncommitted changes in {', '.join(dirty)}; commit or stash them first (or use --no-sync)")
+
+    for rel, _text, pairs in changes:
+        for (old, new), count in {p: pairs.count(p) for p in pairs}.items():
+            note = f"  ({count} places)" if count > 1 else ""
+            if core(old) and core(new) and core(new) < core(old):
+                note += "  (lower than before)"
+            print(f"  {rel}: {old} -> {new}{note}")
+    if dry:
+        print(f"git-tag-sync: dry run; would commit those and tag {tag}")
+        return
+
+    for rel, text, _ in changes:
+        with open(os.path.join(root, rel), "w", encoding="utf-8") as fh:
+            fh.write(text)
+    paths = [os.path.join(root, rel) for rel, *_ in changes]
+    r = subprocess.run(["git", "commit", "--quiet", "-m", f"chore(release): {tag}", "--", *paths])
+    if r.returncode != 0:
+        subprocess.run(["git", "checkout", "--quiet", "--", *paths])
+        die("commit failed (hook?); version files restored, no tag created")
+    print(f"git-tag-sync: committed {git('rev-parse', '--short', 'HEAD')} chore(release): {tag}")
+    passthrough(args)
+
+
+if __name__ == "__main__":
+    main()
