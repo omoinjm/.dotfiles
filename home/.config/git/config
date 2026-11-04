@@ -1,0 +1,41 @@
+# Shared git config (XDG: ~/.config/git/config).
+# Identity and machine-specific settings stay in ~/.gitconfig, which git reads
+# after this file, so anything set there wins.
+
+[init]
+	defaultBranch = main
+
+[core]
+	editor = nvim
+	ignorecase = false
+
+[push]
+	default = simple
+	autoSetupRemote = true
+
+[pull]
+	rebase = false
+
+[fetch]
+	prune = true
+
+[merge]
+	conflictstyle = zdiff3
+
+[diff]
+	tool = nvimdiff
+	colorMoved = default
+
+[difftool "nvimdiff"]
+	cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
+
+[mergetool "nvimdiff"]
+	cmd = nvim -d \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+
+[color]
+	ui = auto
+
+[include]
+	path = aliases.gitconfig
+	path = delta.gitconfig

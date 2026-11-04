@@ -22,7 +22,8 @@ dotfiles/
 │   ├── fish/
 │   ├── nvim/
 │   ├── tmux/
-│   └── lazygit/
+│   ├── lazygit/
+│   └── git/
 ├── platform/
 │   ├── linux/shell/       # bash and zsh
 │   ├── linux/scripts/     # OS-specific automation
@@ -60,6 +61,7 @@ This runs `install/link.sh`, which symlinks `home/.config/<app>` into `~/.config
 - `nvim`
 - `tmux`
 - `lazygit`
+- `git`
 
 Link only what you need:
 
@@ -146,6 +148,25 @@ Linked automatically by `./install/install.sh`. Config files:
 
 - tmux: `home/.config/tmux/tmux.conf`
 - lazygit: `home/.config/lazygit/config.yml`
+
+### git
+
+`home/.config/git/` is linked to `~/.config/git` (git's XDG config location):
+
+- `config` – shared settings, nvim as diff/merge tool
+- `aliases.gitconfig` – `git st`, `git hist`, `git ps`, `git open`, …
+- `delta.gitconfig` – [delta](https://github.com/dandavison/delta) pager; falls back to `less` when delta isn't installed (`sudo apt install git-delta`)
+- `ignore` – global gitignore
+
+Identity stays out of the repo: put `[user] name/email` in `~/.gitconfig`, which git reads after `~/.config/git/config`.
+
+### Secret scanning
+
+CI runs [gitleaks](https://github.com/gitleaks/gitleaks) over the full history. To scan before each commit too:
+
+```bash
+uv tool install pre-commit && pre-commit install
+```
 
 ## Windows
 
