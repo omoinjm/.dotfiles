@@ -99,3 +99,6 @@ env
 
 # junk
 *.log
+
+# tmux machine-local overrides
+home/.config/tmux/tmux-private.conf

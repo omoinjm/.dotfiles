@@ -30,16 +30,24 @@ background) — this config doesn't remap that one.
 
 ## Custom key bindings
 
-Set directly in `tmux.conf` / `utility.conf`:
+Set in `bindings.conf` (sourced after tpm, so it overrides plugin defaults) and `utility.conf`:
 
 | Key              | Action                                                    |
 | ---------------- | ---------------------------------------------------------- |
 | `prefix` + `r`   | reload `tmux.conf`                                         |
-| `prefix` + `o`   | open the current pane's directory (macOS `open`)           |
+| `prefix` + `o`   | open the current pane's directory (`open` / `explorer.exe` / `xdg-open`) |
 | `prefix` + `e`   | kill every pane except the current one                     |
 | `prefix` + `g`   | open [lazygit](https://github.com/jesseduffield/lazygit) in a popup, rooted at the current pane's path |
 | `C-S-Left`       | swap the current window one to the left, then select it (no prefix) |
 | `C-S-Right`      | swap the current window one to the right, then select it (no prefix) |
+| `prefix` + `\|` / `%` | split left/right in the current path, then even out pane widths |
+| `prefix` + `-` / `"`  | split top/bottom in the current path, then even out pane heights |
+
+Other settings worth knowing: `set-clipboard on` (copy-mode yanks reach the
+system clipboard via OSC 52, also over SSH), `allow-passthrough on`,
+`renumber-windows on`, undercurl support for nvim, and a 2M-line scrollback.
+Machine-local tweaks go in `~/.config/tmux/tmux-private.conf` (untracked,
+loaded last if present).
 
 `mode-keys` is set to `vi`, so copy mode (`prefix` + `[`) uses vi-style
 movement and `v`/`y` to select/copy.
@@ -50,8 +58,6 @@ movement and `v`/`y` to select/copy.
 | ------------------------ | ------------------------------------------ |
 | `prefix` + `h`/`j`/`k`/`l` (or `C-h`/`C-j`/`C-k`/`C-l`) | move to the pane left/below/above/right |
 | `prefix` + `H`/`J`/`K`/`L` | resize the current pane in that direction |
-| `prefix` + `\|`         | split horizontally (left/right)           |
-| `prefix` + `-`          | split vertically (top/bottom)             |
 | `prefix` + `\`          | split horizontally, full window width     |
 | `prefix` + `_`          | split vertically, full window height      |
 | `prefix` + `c`          | new window, opened in the current pane's path |
@@ -61,7 +67,7 @@ movement and `v`/`y` to select/copy.
 
 Managed by [tpm](https://github.com/tmux-plugins/tpm) — install/update with
 `prefix` + `I`, and plugins load automatically on tmux startup
-(`tmux.conf:96-99`).
+(the `@plugin` lines near the end of `tmux.conf`).
 
 - **[tmux-pain-control](https://github.com/tmux-plugins/tmux-pain-control)**
   — the pane/window bindings above.
