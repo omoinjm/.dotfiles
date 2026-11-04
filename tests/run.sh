@@ -69,6 +69,33 @@ if [[ "$tracked_secret_hits" -eq 0 ]]; then
   pass "no obvious secrets in tracked files"
 fi
 
+echo "==> Checking secret paths are not tracked"
+for path in "${FORBIDDEN_TRACKED[@]}"; do
+  if git -C "$ROOT" ls-files --error-unmatch "$path" >/dev/null 2>&1; then
+    fail "tracked secret or local-only path: $path"
+  else
+    pass "not tracked: $path"
+  fi
+done
+
+echo "==> Checking tracked files for secrets"
+tracked_secret_hits=0
+while IFS= read -r -d '' file; do
+  case "$file" in
+    *.example) continue ;;
+    tests/*|scripts/*|SECURITY.md) continue ;;
+  esac
+  if rg -n "$SECRET_PATTERN" "$ROOT/$file" >/dev/null 2>&1; then
+    fail "possible secret in tracked file: $file"
+    rg -n "$SECRET_PATTERN" "$ROOT/$file" || true
+    tracked_secret_hits=1
+  fi
+done < <(git -C "$ROOT" ls-files -z)
+
+if [[ "$tracked_secret_hits" -eq 0 ]]; then
+  pass "no obvious secrets in tracked files"
+fi
+
 echo "==> Checking fish syntax"
 if command -v fish >/dev/null 2>&1; then
   while IFS= read -r -d '' file; do
@@ -83,6 +110,18 @@ else
   echo "SKIP: fish not installed"
 fi
 
+echo "==> Checking for hardcoded home paths in tracked fish config"
+tracked_fish_hits=0
+while IFS= read -r -d '' file; do
+  if rg -n "$HOME_PATH_PATTERN" "$ROOT/$file" >/dev/null 2>&1; then
+    fail "hardcoded or broken home path in tracked file: $file"
+    rg -n "$HOME_PATH_PATTERN" "$ROOT/$file" || true
+    tracked_fish_hits=1
+  fi
+done < <(git -C "$ROOT" ls-files -z 'home/.config/fish/*.fish' 'home/.config/fish/**/*.fish')
+
+if [[ "$tracked_fish_hits" -eq 0 ]]; then
+  pass "no hardcoded home paths in tracked fish config"
 echo "==> Checking for hardcoded home paths in tracked fish config"
 tracked_fish_hits=0
 while IFS= read -r -d '' file; do
@@ -117,6 +156,12 @@ for example in \
   secrets/discord/env.example \
   secrets/password-store/exported-keys/private.pgp.example \
   secrets/password-store/exported-keys/public.pgp.example; do
+for example in \
+  secrets/fish/secrets.fish.example \
+  secrets/fish/ssh.fish.example \
+  secrets/discord/env.example \
+  secrets/password-store/exported-keys/private.pgp.example \
+  secrets/password-store/exported-keys/public.pgp.example; do
   if [[ -f "$ROOT/$example" ]]; then
     pass "example present: $example"
   else
@@ -131,6 +176,12 @@ for pattern in \
   '.last_cleanup_date' \
   'private.pgp' \
   'public.pgp'; do
+for pattern in \
+  'conf.d/secrets.fish' \
+  'conf.d/ssh.fish' \
+  '.last_cleanup_date' \
+  'private.pgp' \
+  'public.pgp'; do
   if rg -Fq "$pattern" "$ROOT/.gitignore" "$FISH_DIR/.gitignore" 2>/dev/null; then
     pass "gitignore covers $pattern"
   else
@@ -139,6 +190,7 @@ for pattern in \
 done
 
 echo "==> Checking install scripts are executable"
+for script in install/link.sh install/install.sh scripts/purge-secrets-from-history.sh; do
 for script in install/link.sh install/install.sh scripts/purge-secrets-from-history.sh; do
   if [[ -x "$ROOT/$script" ]]; then
     pass "executable: $script"
