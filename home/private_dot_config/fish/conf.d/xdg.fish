@@ -23,6 +23,9 @@ set -gx GNUPGHOME $HOME/.local/share/gnupg
 set -gx DOTNET_CLI_HOME $HOME/.local/share/dotnet-cli
 set -gx DOTNET_CLI_TELEMETRY_OPTOUT 1
 
+# Microsoft 365 MCP server logs (was ~/.ms-365-mcp-server/logs)
+set -gx MS365_MCP_LOG_DIR $HOME/.local/state/ms-365-mcp-server/logs
+
 # AI CLIs (were ~/.copilot, ~/.codex)
 set -gx COPILOT_HOME $HOME/.config/copilot
 set -gx CODEX_HOME $HOME/.config/codex
