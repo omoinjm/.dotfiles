@@ -1,6 +1,7 @@
 # Shared git config (XDG: ~/.config/git/config).
-# Identity and machine-specific settings stay in ~/.gitconfig, which git reads
-# after this file, so anything set there wins.
+# Identity and machine-specific settings live in ~/.config/git/local.gitconfig
+# (not in this repo), included last so anything set there wins. A legacy
+# ~/.gitconfig, if present, is still read after this file.
 
 [init]
 	defaultBranch = main
@@ -39,3 +40,4 @@
 [include]
 	path = aliases.gitconfig
 	path = delta.gitconfig
+	path = ~/.config/git/local.gitconfig
