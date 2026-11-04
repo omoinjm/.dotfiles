@@ -6,6 +6,10 @@ return {
     opts = function()
       return {
         transparent = true,
+        styles = {
+          sidebars = "transparent", -- file explorer, help, quickfix, etc.
+          floats = "transparent", -- popups, pickers, hover docs
+        },
       }
     end,
   },
