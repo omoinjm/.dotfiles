@@ -106,10 +106,10 @@ else
   fail "PNPM_HOME is not set to \$HOME/.local/share/pnpm"
 fi
 
-if rg -Fxq 'set -gx GOPATH "$HOME/go"' "$FISH_DIR/conf.d/go.fish"; then
+if rg -Fxq 'set -gx GOPATH "$HOME/.local/share/go"' "$FISH_DIR/conf.d/go.fish"; then
   pass "GOPATH uses HOME"
 else
-  fail "GOPATH is not set to \$HOME/go"
+  fail "GOPATH is not set to \$HOME/.local/share/go"
 fi
 
 echo "==> Checking secret examples exist"
