@@ -2,18 +2,18 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-FISH_DIR="$ROOT/home/.config/fish"
+FISH_DIR="$ROOT/home/private_dot_config/fish"
 FAILED=0
 
 pass() { echo "PASS: $1"; }
 fail() { echo "FAIL: $1"; FAILED=1; }
 
 FORBIDDEN_TRACKED=(
-  home/.config/fish/conf.d/secrets.fish
-  home/.config/fish/conf.d/ssh.fish
-  home/.config/fish/config-local.fish
-  home/.config/fish/fish_variables
-  home/.config/fish/.last_cleanup_date
+  home/private_dot_config/fish/conf.d/secrets.fish
+  home/private_dot_config/fish/conf.d/ssh.fish
+  home/private_dot_config/fish/config-local.fish
+  home/private_dot_config/fish/fish_variables
+  home/private_dot_config/fish/.last_cleanup_date
   secrets/password-store/exported-keys/private.pgp
   secrets/password-store/exported-keys/public.pgp
 )
@@ -23,8 +23,10 @@ HOME_PATH_PATTERN='/home/omoinjm|"/\.local/'
 
 echo "==> Checking repository layout"
 for path in \
-  home/.config/fish \
-  home/.config/nvim \
+  .chezmoiroot \
+  home/.chezmoi.toml.tmpl \
+  home/private_dot_config/fish \
+  home/private_dot_config/nvim \
   platform/linux/shell/bash \
   platform/windows/powershell \
   secrets/fish \
@@ -91,7 +93,7 @@ while IFS= read -r -d '' file; do
     rg -n "$HOME_PATH_PATTERN" "$ROOT/$file" || true
     tracked_fish_hits=1
   fi
-done < <(git -C "$ROOT" ls-files -z 'home/.config/fish/*.fish' 'home/.config/fish/**/*.fish')
+done < <(git -C "$ROOT" ls-files -z 'home/private_dot_config/fish/*.fish' 'home/private_dot_config/fish/**/*.fish')
 
 if [[ "$tracked_fish_hits" -eq 0 ]]; then
   pass "no hardcoded home paths in tracked fish config"
@@ -131,7 +133,7 @@ for pattern in \
   '.last_cleanup_date' \
   'private.pgp' \
   'public.pgp'; do
-  if rg -Fq "$pattern" "$ROOT/.gitignore" "$FISH_DIR/.gitignore" 2>/dev/null; then
+  if rg -Fq "$pattern" "$ROOT/.gitignore" 2>/dev/null; then
     pass "gitignore covers $pattern"
   else
     fail "gitignore missing pattern: $pattern"
@@ -146,6 +148,30 @@ for script in install/link.sh install/install.sh scripts/purge-secrets-from-hist
     fail "not executable: $script"
   fi
 done
+
+echo "==> Checking fisher-managed plugin files are not tracked"
+plugin_hits=$(git -C "$ROOT" ls-files 'home/private_dot_config/fish/**' | rg '/(functions|conf\.d|completions)/(fisher|_fzf_|__z|z\.fish|fzf\.fish|fzf_configure_bindings|bass|__bass)' || true)
+if [[ -z "$plugin_hits" ]]; then
+  pass "no plugin files tracked (fisher installs them from fish_plugins)"
+else
+  fail "plugin files tracked; fisher owns these:"
+  echo "$plugin_hits"
+fi
+
+echo "==> Checking chezmoi source state"
+if command -v chezmoi >/dev/null 2>&1; then
+  cz_tmp="$(mktemp -d)"
+  if HOME="$cz_tmp" chezmoi --config "$cz_tmp/chezmoi.toml" --source "$ROOT" \
+      --destination "$cz_tmp/home" managed >/dev/null 2>"$cz_tmp/err"; then
+    pass "chezmoi can read the source state"
+  else
+    fail "chezmoi failed to read the source state"
+    cat "$cz_tmp/err"
+  fi
+  rm -rf "$cz_tmp"
+else
+  echo "SKIP: chezmoi not installed"
+fi
 
 if [[ "$FAILED" -eq 0 ]]; then
   echo "All tests passed."

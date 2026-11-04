@@ -6,25 +6,19 @@ setup, a themed prompt, and a handful of fzf-driven shortcuts.
 ## Setup
 
 1. Install fish and set it as your login shell.
-2. Install [fisher](https://github.com/jorgebucaran/fisher) (the plugin
-   manager `config.fish` and `fish_plugins` assume):
-   ```fish
-   curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source
-   fisher install jorgebucaran/fisher
-   ```
-3. Install the plugins listed in `fish_plugins`:
-   ```fish
-   fisher update
-   ```
+2. Apply the dotfiles (`install/link.sh` at the repo root). chezmoi links
+   these files into `~/.config/fish/` and then runs `fisher update`, which
+   installs [fisher](https://github.com/jorgebucaran/fisher) and the plugins
+   listed in `fish_plugins` (plugin files are not tracked in the repo):
    - [`bass`](https://github.com/edc/bass) — run bash scripts/source `.sh`
      files from fish.
    - [`z`](https://github.com/jethrokuan/z) — jump to frecently-used
      directories.
    - [`fzf.fish`](https://github.com/PatrickF1/fzf.fish) — fzf-powered
      history/directory/git search bindings.
-4. Install [oh-my-posh](https://ohmyposh.dev/) — `config.fish` initializes it
-   with the remote `bubblesextra` theme for the prompt.
-5. Optional, auto-detected if present (config degrades gracefully without
+3. Install [oh-my-posh](https://ohmyposh.dev/) — `config.fish` initializes it
+   with the local `~/.config/oh-my-posh/bubblesextra.omp.json` theme.
+4. Optional, auto-detected if present (config degrades gracefully without
    them): `nvim` (aliases `vim`/`vi`), [`eza`](https://github.com/eza-community/eza)
    or [`lsd`](https://github.com/lsd-rs/lsd) or `colorls` (nicer `ls`/`tree`),
    `bat` (fzf file previews, macOS), [`nvm`](https://github.com/nvm-sh/nvm),
@@ -48,13 +42,14 @@ These are created per-machine and read if present — see `.gitignore`:
   `config-linux.fish` / `config-windows.fish`) and, if present,
   `config-local.fish`.
 - `conf.d/*.fish` — auto-sourced on every shell start, one concern per file
-  (colors, per-tool `PATH`/env setup for `go`/`node`/`dotnet`/`nebius`, `z`
-  setup, fzf setup, the daily cleanup hook, tide color vars).
-- `functions/*.fish` — autoloaded on first use: fzf.fish's search functions,
-  `z`/`zo`, `bass`, the (currently unused — see below) custom `fish_prompt`,
-  key bindings, `nvm` wrapper.
-- `completions/*.fish` — autoloaded completions for `bun`, `fisher`,
-  `copilot`, `fzf_configure_bindings`.
+  (colors, per-tool `PATH`/env setup for `go`/`node`/`dotnet`/`nebius`,
+  the daily cleanup hook, tide color vars; fisher adds `z` and fzf setup).
+- `functions/*.fish` — autoloaded on first use: the (currently unused — see
+  below) custom `fish_prompt`, key bindings, `nvm` wrapper, `cpwd`, `dot`
+  (chezmoi for this repo), the `env-*` tools. Plugin functions (fzf.fish,
+  `z`, `bass`, `fisher`) are installed by fisher and not tracked.
+- `completions/*.fish` — completions for `bun` and `copilot` (plugin
+  completions come from fisher).
 
 ## Usage
 

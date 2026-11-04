@@ -1,0 +1,19 @@
+{{- if ne .chezmoi.os "windows" -}}
+#!/bin/sh
+# Installs / updates fish plugins from fish_plugins. Plugin files are not tracked
+# in this repo; fisher owns them. Re-runs whenever fish_plugins changes:
+# fish_plugins sha256: {{ include "private_dot_config/fish/fish_plugins" | sha256sum }}
+set -eu
+
+if ! command -v fish >/dev/null 2>&1; then
+    echo "fisher: fish is not installed, skipping"
+    exit 0
+fi
+
+exec fish -c '
+    if not functions -q fisher
+        curl -fsSL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source
+        or exit 1
+    end
+    fisher update'
+{{ end -}}

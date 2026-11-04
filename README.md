@@ -18,25 +18,30 @@ Cross-platform configs for Fish, Neovim (LazyVim), tmux, lazygit, Linux shells, 
 
 ```
 dotfiles/
-├── home/.config/          # Portable app configs (symlinked into ~/.config)
-│   ├── fish/
-│   ├── nvim/
-│   ├── tmux/
-│   ├── lazygit/
-│   ├── git/
-│   └── oh-my-posh/      # local prompt theme (no download at shell start)
+├── .chezmoiroot           # tells chezmoi the source state lives in home/
+├── home/                  # chezmoi source state → applied to ~
+│   ├── .chezmoi.toml.tmpl     config for the dotfiles chezmoi instance (symlink mode)
+│   ├── .chezmoiignore         repo-only files, per-OS exclusions
+│   ├── .chezmoiscripts/       fisher update, tmux plugins
+│   └── private_dot_config/    → ~/.config (kept chmod 700)
+│       ├── fish/
+│       ├── nvim/
+│       ├── tmux/
+│       ├── lazygit/
+│       ├── git/
+│       └── oh-my-posh/        local prompt theme (no download at shell start)
 ├── platform/
 │   ├── linux/shell/       # bash and zsh
 │   ├── linux/scripts/     # OS-specific automation
 │   └── windows/           # PowerShell, Terminal, VS Code, starship
 ├── secrets/               # Example templates only — never commit real values
-├── install/               # Bootstrap and symlink scripts
+├── install/               # Bootstrap: runs chezmoi with the dotfiles config
 └── tests/                 # CI checks
 ```
 
 | Path | Purpose |
 |------|---------|
-| `home/.config/` | XDG configs shared across machines |
+| `home/` | chezmoi source state for `~` (XDG configs shared across machines) |
 | `platform/linux/` | Linux-only shell and script setup |
 | `platform/windows/` | Windows-only PowerShell and app settings |
 | `secrets/` | Copy these examples locally and fill in your values |
@@ -50,28 +55,36 @@ git clone https://github.com/omoinjm/.dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ```
 
-### 2. Link configs into your home directory
+### 2. Apply the configs to your home directory
 
 ```bash
 ./install/install.sh
 ```
 
-This runs `install/link.sh`, which symlinks `home/.config/<app>` into `~/.config/<app>` for:
+This runs `install/link.sh`, which installs [chezmoi](https://www.chezmoi.io/) if needed and applies
+`home/` to `~` — `fish`, `nvim`, `tmux`, `lazygit`, `git` and `oh-my-posh` under `~/.config`.
+It then installs the fish plugins (fisher) and tmux plugins (tpm).
 
-- `fish`
-- `nvim`
-- `tmux`
-- `lazygit`
-- `git`
-- `oh-my-posh`
-
-Link only what you need:
+Apply only some apps, or preview first:
 
 ```bash
 ./install/link.sh fish nvim
+./install/link.sh -- --dry-run --verbose
 ```
 
-If a target already exists as a real directory (not a symlink), the script skips it to avoid overwriting your data.
+### How chezmoi is set up here
+
+- **Symlink mode.** Each file in `~/.config/<app>/` is a symlink to its file in `home/`, so editing
+  `~/.config/fish/config.fish` edits the repo — just commit. Files apps create at runtime
+  (`fish_variables`, fisher plugins, `tmux/plugins/`, secrets) stay real files in `~/.config` and never
+  touch the repo.
+- **New file?** Create it in `home/private_dot_config/<app>/` and run `dot apply`, or create it in
+  `~/.config` and run `dot add <file>`.
+- **Its own config.** This instance uses `~/.config/chezmoi-dotfiles/chezmoi.toml`. The default
+  `~/.config/chezmoi/` belongs to [machine-snapshot](https://github.com/omoinjm/machine-snapshot), so use
+  the `dot` fish function (`dot status`, `dot diff`, `dot apply`) rather than plain `chezmoi` here.
+- **Names.** `private_dot_config` → `~/.config` with mode 700; `dot_foo` → `.foo`. See the
+  [chezmoi docs](https://www.chezmoi.io/reference/source-state-attributes/).
 
 ### 3. Set up local secrets
 
@@ -94,13 +107,9 @@ bash tests/run.sh
 
 ### Fish
 
-After linking, install plugins with [Fisher](https://github.com/jorgebucaran/fisher):
-
-```fish
-fisher update
-```
-
-Plugins are listed in `home/.config/fish/fish_plugins`:
+Plugins are listed in `home/private_dot_config/fish/fish_plugins` and installed by
+[Fisher](https://github.com/jorgebucaran/fisher). Applying runs `fisher update` automatically
+whenever that file changes; the plugin files themselves are not tracked:
 
 - [Fisher](https://github.com/jorgebucaran/fisher) — plugin manager
 - [bass](https://github.com/edc/bass) — run bash utilities from fish
@@ -142,18 +151,18 @@ After linking:
 nvim
 ```
 
-LazyVim installs plugins on first launch. Custom config lives in `home/.config/nvim/lua/`.
+LazyVim installs plugins on first launch. Custom config lives in `home/private_dot_config/nvim/lua/`.
 
 ### tmux and lazygit
 
-Linked automatically by `./install/install.sh`. Config files:
+Applied by `./install/install.sh`. Config files:
 
-- tmux: `home/.config/tmux/tmux.conf`
-- lazygit: `home/.config/lazygit/config.yml`
+- tmux: `home/private_dot_config/tmux/tmux.conf`
+- lazygit: `home/private_dot_config/lazygit/config.yml`
 
 ### git
 
-`home/.config/git/` is linked to `~/.config/git` (git's XDG config location):
+`home/private_dot_config/git/` is applied to `~/.config/git` (git's XDG config location):
 
 - `config` – shared settings, nvim as diff/merge tool
 - `aliases.gitconfig` – `git st`, `git hist`, `git ps`, `git open`, …
@@ -228,18 +237,17 @@ Templates and setup instructions: [secrets/README.md](./secrets/README.md)
 
 ## Migrating from the old layout
 
-If you previously symlinked from `src/config/`:
-
-```bash
-cd ~/dotfiles
-./install/link.sh fish nvim tmux lazygit
-```
+If `~/.config/<app>` is still a whole-directory symlink into this repo (the pre-chezmoi layout),
+`./install/link.sh` removes those links and applies with chezmoi. Move any runtime files you kept inside
+the repo copy (`fish_variables`, `conf.d/secrets.fish`, `conf.d/ssh.fish`, `tmux/plugins/`) into the new
+real `~/.config/<app>/` directories first.
 
 Old path → new path:
 
 | Before | After |
 |--------|-------|
-| `src/config/` | `home/.config/` |
+| `home/.config/` | `home/private_dot_config/` |
+| `src/config/` | `home/private_dot_config/` |
 | `src/linux/shell/` | `platform/linux/shell/` |
 | `src/windows/` | `platform/windows/` |
 

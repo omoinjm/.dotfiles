@@ -1,0 +1,13 @@
+# Config for the *dotfiles* chezmoi instance. It lives in
+# ~/.config/chezmoi-dotfiles/ (pass --config; see install/link.sh and the `dot`
+# fish function) so it never clashes with machine-snapshot, which owns the
+# default ~/.config/chezmoi/.
+sourceDir = {{ .chezmoi.workingTree | quote }}
+
+# Plain files become symlinks into this repo, so editing ~/.config/... edits the
+# repo directly (no `chezmoi re-add`). Templates and executables are copied.
+mode = "symlink"
+
+[git]
+  autoCommit = false
+  autoPush = false
