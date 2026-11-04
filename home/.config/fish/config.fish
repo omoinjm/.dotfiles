@@ -1,6 +1,7 @@
 set fish_greeting ""
 
-set -gx TERM xterm-256color
+# TERM is left to the terminal / tmux (default-terminal); forcing it here
+# breaks undercurl and true colour inside tmux.
 
 # theme
 set -g theme_color_scheme terminal-dark
@@ -29,10 +30,10 @@ set -gx PATH bin $PATH
 set -gx PATH ~/bin $PATH
 set -gx PATH ~/.local/bin $PATH
 
-# Terminal theme
-oh-my-posh init fish --config \
-    'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/bubblesextra.omp.json' \
-    | source
+# Terminal theme (local copy, so starting a shell needs no network;
+# refresh with: oh-my-posh config export --config <theme-url> --output <file>)
+command -q oh-my-posh
+and oh-my-posh init fish --config ~/.config/oh-my-posh/bubblesextra.omp.json | source
 
 switch (uname)
     case Darwin

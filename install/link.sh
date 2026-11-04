@@ -11,7 +11,7 @@ Usage: $(basename "$0") [app...]
 
 Symlink dotfiles from home/.config into ~/.config.
 
-With no arguments, links: fish, nvim, tmux, lazygit, git.
+With no arguments, links: fish, nvim, tmux, lazygit, git, oh-my-posh.
 
 Examples:
   $(basename "$0")
@@ -44,7 +44,7 @@ main() {
   local apps=("$@")
 
   if [[ ${#apps[@]} -eq 0 ]]; then
-    apps=(fish nvim tmux lazygit git)
+    apps=(fish nvim tmux lazygit git oh-my-posh)
   fi
 
   for app in "${apps[@]}"; do

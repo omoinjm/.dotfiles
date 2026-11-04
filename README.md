@@ -23,7 +23,8 @@ dotfiles/
 │   ├── nvim/
 │   ├── tmux/
 │   ├── lazygit/
-│   └── git/
+│   ├── git/
+│   └── oh-my-posh/      # local prompt theme (no download at shell start)
 ├── platform/
 │   ├── linux/shell/       # bash and zsh
 │   ├── linux/scripts/     # OS-specific automation
@@ -62,6 +63,7 @@ This runs `install/link.sh`, which symlinks `home/.config/<app>` into `~/.config
 - `tmux`
 - `lazygit`
 - `git`
+- `oh-my-posh`
 
 Link only what you need:
 
