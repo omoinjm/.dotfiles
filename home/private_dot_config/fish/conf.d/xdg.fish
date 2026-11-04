@@ -19,3 +19,6 @@ set -gx PSQL_HISTORY $HOME/.local/state/psql_history
 set -gx PYTHON_HISTORY $HOME/.local/state/python_history
 set -gx LESSHISTFILE $HOME/.local/state/lesshst
 set -gx WGETRC $HOME/.config/wget/wgetrc
+
+# Terraform: skip the update check, which is all ~/.terraform.d held
+set -gx CHECKPOINT_DISABLE 1
