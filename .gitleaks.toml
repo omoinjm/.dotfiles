@@ -5,3 +5,9 @@ useDefault = true
 [[allowlists]]
 description = "secret templates"
 paths = ['''(^|/)[^/]+\.example$''']
+
+# herdr is a terminal-multiplexer config; its `key = "..."` keybindings trip
+# the generic-api-key rule (e.g. key = "ctrl+shift+down"). No real secrets here.
+[[allowlists]]
+description = "herdr keybinding config false positives"
+paths = ['''(^|/)herdr/config\.toml$''']
