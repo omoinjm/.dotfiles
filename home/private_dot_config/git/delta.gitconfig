@@ -1,0 +1,18 @@
+# delta (https://github.com/dandavison/delta) as the diff pager.
+# Falls back to less / plain output on machines without delta (apt: git-delta).
+
+[core]
+	pager = "if command -v delta >/dev/null 2>&1; then delta; else less; fi"
+
+[interactive]
+	diffFilter = "if command -v delta >/dev/null 2>&1; then delta --color-only; else cat; fi"
+
+[delta]
+	navigate = true
+	line-numbers = true
+	side-by-side = false
+	syntax-theme = Solarized (dark)
+	features = decorations
+
+[delta "interactive"]
+	keep-plus-minus-markers = true

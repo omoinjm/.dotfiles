@@ -1,0 +1,7 @@
+[extend]
+useDefault = true
+
+# Templates in secrets/ hold placeholders only; real values live in machine-snapshot.
+[[allowlists]]
+description = "secret templates"
+paths = ['''(^|/)[^/]+\.example$''']

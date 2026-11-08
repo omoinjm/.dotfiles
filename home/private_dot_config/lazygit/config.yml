@@ -1,0 +1,18 @@
+customCommands:
+  - key: "C"
+    command: "git cz"
+    description: "commit with commitizen"
+    context: "files"
+    loadingText: "opening commitizen commit tool"
+    output: terminal
+
+git:
+  # fish's git-auto-fetch.fish already fetches in the background on cd
+  autoFetch: false
+  # cycle renderers with `|`; delta falls back to plain git output when not installed
+  diffRenderers:
+    - name: delta
+      command: if command -v delta >/dev/null 2>&1; then delta --dark --syntax-theme="Solarized (dark)" --paging=never; else cat; fi
+    - name: words
+      type: rawGit
+      args: ["--color-words"]

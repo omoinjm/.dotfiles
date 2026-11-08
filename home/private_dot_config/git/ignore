@@ -1,0 +1,6 @@
+# Global gitignore (XDG: ~/.config/git/ignore)
+.DS_Store
+*.sw[po]
+Session.vim
+.netrwhist
+**/.claude/settings.local.json

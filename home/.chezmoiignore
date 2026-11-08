@@ -1,0 +1,11 @@
+# Target paths (relative to ~) that chezmoi must not create.
+
+# Docs that only make sense in the repo
+.config/*/README.md
+.config/nvim/LICENSE
+
+{{- if eq .chezmoi.os "windows" }}
+# Windows uses platform/windows (PowerShell); fish and tmux don't apply
+.config/fish
+.config/tmux
+{{- end }}
